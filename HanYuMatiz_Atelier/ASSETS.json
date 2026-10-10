@@ -1,0 +1,44 @@
+[
+  {
+    "role": "calendar",
+    "path": "research/calendar/tung-shu-600.jpg",
+    "mime": "image/jpeg",
+    "sha256": "5fd53902df543b87891d25b8f5a7850a9d97d5433a9d02dee37101a753cd59ea",
+    "title": "Chinese manuscript Ta-ch'uan t'ung-shu",
+    "creator": "Wellcome Collection · L0020845",
+    "date": "Autor y fecha no indicados en el catálogo",
+    "source_url": "https://wellcomecollection.org/works/b4968g8k",
+    "image_url": "https://iiif.wellcomecollection.org/image/L0020845/full/600,/0/default.jpg",
+    "license": "CC BY 4.0 — crédito: Wellcome Collection",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "integration": "Recorte y posición lateral por CSS; opacidad y matiz cálido."
+  },
+  {
+    "role": "paper",
+    "path": "research/calendar/ju-i-paper-region.jpg",
+    "mime": "image/jpeg",
+    "sha256": "080b4822c5ceeeab8d7113cdfbc7fe2de53253fde31b9635649f2e2ba89e09c6",
+    "title": "Chinese manuscript Ju-i chi-hsiang",
+    "creator": "Wellcome Collection · L0020844",
+    "date": "Autor y fecha no indicados en el catálogo",
+    "source_url": "https://wellcomecollection.org/works/mnx6a7k5",
+    "image_url": "https://iiif.wellcomecollection.org/image/L0020844/305,247,153,132/full/0/default.jpg",
+    "license": "CC BY 4.0 — crédito: Wellcome Collection",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "integration": "Recorte de una zona de papel servido por el IIIF oficial; la fotografía se repite a su escala de 153 × 132 px, con opacidad reducida, como superficie ambiental."
+  },
+  {
+    "role": "panel",
+    "path": "research/panel/sichuan-lattice-06157-display.jpg",
+    "mime": "image/jpeg",
+    "sha256": "81253c28ee38d27805718ba3323ea8a269c6f31af4c1aae6246cfd716007baef",
+    "title": "Celosía de madera de época Qing, Chengdu",
+    "creator": "Fotografía de Daderot · Museo de la Universidad de Sichuan",
+    "date": "Fotografía de 2015; objeto de época Qing",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Wooden_lattice_-_Sichuan_University_Museum_-_Chengdu,_China_-_DSC06157.jpg",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Wooden_lattice_-_Sichuan_University_Museum_-_Chengdu%2C_China_-_DSC06157.jpg/1920px-Wooden_lattice_-_Sichuan_University_Museum_-_Chengdu%2C_China_-_DSC06157.jpg",
+    "license": "CC0 1.0 para la fotografía; objeto histórico en dominio público",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "integration": "Miniatura oficial de Wikimedia; encuadre de las ramas laterales, mezcla con el fondo y máscara de bordes por CSS. Desplazamiento de 3 px, sin redibujar el objeto."
+  }
+]

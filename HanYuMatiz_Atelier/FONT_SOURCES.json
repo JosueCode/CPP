@@ -1,0 +1,159 @@
+{
+  "format": "woff2",
+  "html_source": "/workspace/attachments/28d4ed90-1df5-479d-a1b0-c7cdffa9f53c/HanYuMatiz_V7_Chinese_Atelier.html",
+  "html_source_sha256": "27821aad77e217183c8cc89f5c6f418b4a6662a35f503fc6880c6b56b53271b8",
+  "cjk_requested": "。一三下东中为也习书二五人今以件会体你例元关典再写农冬况冷利北十午南历发可吃合吉听和善四回图地处夏天好始字学宋完定宜寒对小山帐年廿开很得必忌情惊想感成我手择拼挑提改文日旦明春暑月有果案楷次正每比气水汇汉河清满漢点片物状现理用由白知确礼秋种程立端篆練练结继续習能自至色节芒花菜蛰西要觉解言語认许词译试语误说读课谷赤辞辨过返这适选道释重错键阳降隶雨雪需霜露青音页须风首高鸟，",
+  "chinese_requested_count": 185,
+  "fonts": [
+    {
+      "file": "Gabarito-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/gabarito/Gabarito%5Bwght%5D.ttf",
+      "bytes": 158144,
+      "sha256": "8650e2bd7747f7d74619fd7aecbcb0309e6f37b7964024f3fb15ae4833b67ca5",
+      "original_family": "Gabarito",
+      "derivative_family": "AtelierUI",
+      "output_file": "AtelierUI.woff2",
+      "output_bytes": 48324,
+      "output_sha256": "bfd5e05fac8907dfbd106643853c9135c4307fcf532b84541cdbe3f0bbf05a78",
+      "license_file": "Gabarito-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 357,
+      "cjk_covered_count": 0,
+      "missing_requested_cjk": null,
+      "missing_pinyin_test": "ǐ ǒ ǔ ǖ ǘ ǚ ǜ ǹ ḿ ế ề",
+      "missing_spanish_test": "",
+      "variable_axes": {
+        "wght": {
+          "min": 400.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      },
+      "copyright_records": [
+        "Copyright 2023 The Gabarito Project Authors (https://github.com/naipefoundry/gabarito)"
+      ],
+      "license_records": [
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "https://scripts.sil.org/OFL"
+      ]
+    },
+    {
+      "file": "Newsreader-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/Newsreader%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 451664,
+      "sha256": "8a08d13f8a6c0d51be379a60af84f945f65369a67e509ee3c3bdcc421254d7c1",
+      "original_family": "Newsreader",
+      "derivative_family": "AtelierDisplay",
+      "output_file": "AtelierDisplay.woff2",
+      "output_bytes": 192456,
+      "output_sha256": "75b2fd6d9aede5c90d5ccdde1bdbca75daaf87ebdbfe9afc0262628b221c2746",
+      "license_file": "Newsreader-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 519,
+      "cjk_covered_count": 0,
+      "missing_requested_cjk": null,
+      "missing_pinyin_test": "ǎ ǐ ǒ ǔ ǖ ǘ ǚ ǜ ǹ ḿ",
+      "missing_spanish_test": "",
+      "variable_axes": {
+        "wght": {
+          "min": 200.0,
+          "default": 400.0,
+          "max": 800.0
+        },
+        "opsz": {
+          "min": 6.0,
+          "default": 18.0,
+          "max": 72.0
+        }
+      },
+      "copyright_records": [
+        "Copyright 2020 The Newsreader Project Authors (http://github.com/productiontype/Newsreader)"
+      ],
+      "license_records": [
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL",
+        "http://scripts.sil.org/OFL"
+      ]
+    },
+    {
+      "file": "Newsreader-Italic-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/Newsreader-Italic%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 495684,
+      "sha256": "796668611f80b64d5adf182fde3b6f29ed83b4e7cbec7b96937e84ac01364792",
+      "original_family": "Newsreader",
+      "derivative_family": "AtelierDisplay",
+      "output_file": "AtelierDisplay-Italic.woff2",
+      "output_bytes": 215920,
+      "output_sha256": "70cdcca4629888e0d3fee8dbc4ec23faa5dd1772fb840c24875ef90d011e0fce",
+      "license_file": "Newsreader-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 519,
+      "cjk_covered_count": 0,
+      "missing_requested_cjk": null,
+      "missing_pinyin_test": "ǎ ǐ ǒ ǔ ǖ ǘ ǚ ǜ ǹ ḿ",
+      "missing_spanish_test": "",
+      "variable_axes": {
+        "wght": {
+          "min": 200.0,
+          "default": 400.0,
+          "max": 800.0
+        },
+        "opsz": {
+          "min": 6.0,
+          "default": 18.0,
+          "max": 72.0
+        }
+      },
+      "copyright_records": [
+        "Copyright 2020 The Newsreader Project Authors (http://github.com/productiontype/Newsreader)"
+      ],
+      "license_records": [
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL",
+        "http://scripts.sil.org/OFL"
+      ]
+    },
+    {
+      "file": "LXGWWenKai-Regular-original.ttf",
+      "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/fonts/TTF/LXGWWenKai-Regular.ttf",
+      "bytes": 25575676,
+      "sha256": "39ad71264b588165b469e35e6afb162a378dacd1f95348160240ba9038ac3009",
+      "original_family": "LXGW WenKai",
+      "derivative_family": "AtelierHanzi",
+      "output_file": "AtelierHanzi.woff2",
+      "output_bytes": 92388,
+      "output_sha256": "1189cec9483e26cf64d648c45c5142b22cd84f5cdf21760cb5621155aec58879",
+      "license_file": "LXGW-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 1080,
+      "cjk_covered_count": 185,
+      "missing_requested_cjk": "",
+      "missing_pinyin_test": "",
+      "missing_spanish_test": "",
+      "variable_axes": {},
+      "copyright_records": [
+        "Copyright 2021-2026 LXGW (https://github.com/lxgw/LxgwWenKai)\nCopyright 2020 The Klee Project Authors (https://github.com/fontworks-fonts/Klee)"
+      ],
+      "license_records": [
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org",
+        "https://openfontlicense.org"
+      ]
+    }
+  ],
+  "pinyin_recommendation": "Use AtelierHanzi for all pinyin, or as fallback: Gabarito and Newsreader originals do not contain every pinyin tone glyph. AtelierHanzi contains all pinyin test characters.",
+  "licenses": [
+    {
+      "file": "Gabarito-OFL.txt",
+      "bytes": 4391,
+      "sha256": "21506cc7106bbfd4aa1c40371f33f9f4296182a8e4bb46658e99af24feb4bfca"
+    },
+    {
+      "file": "Newsreader-OFL.txt",
+      "bytes": 4394,
+      "sha256": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8"
+    },
+    {
+      "file": "LXGW-OFL.txt",
+      "bytes": 5171,
+      "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0"
+    }
+  ]
+}
