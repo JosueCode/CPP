@@ -1,0 +1,10 @@
+HanYuMatiz — 100 palabras nuevas, 156 en total
+
+Extrae el ZIP y abre HanYuMatiz_100_Palabras.html con Chrome, Edge o Firefox.
+No necesitas clave, Python ni servidor para ver la aplicación.
+
+Esta copia incluye 8 lecciones, 34 comparaciones y 70 ejercicios, además de las tres situaciones de prueba anteriores.
+En el HTML sin conexión, Reportar un error guarda un borrador o descarga un JSON; no lo envía al propietario.
+El proyecto Node.js + PostgreSQL adjunto tiene envío real y bandeja privada. Aún necesita hosting para estar accesible desde Internet.
+
+Las lecciones nuevas son originales. La revisión externa es opcional y no se atribuye un nivel HSK sin comprobarlo.

@@ -1,0 +1,26 @@
+{
+  "HanYuMatiz_100_Palabras.html": {
+    "bytes": 1198721,
+    "sha256": "c3afc70cc08f4599eb9a6d5bde9feb27617624b0f91bc4660412e3a64aa6824e"
+  },
+  "HanYuMatiz_100_Palabras.zip": {
+    "bytes": 553843,
+    "sha256": "ab53649d2b0d01f300dfda4d55b3ad159a61a9c1b65e6ba769883ddb1057127e"
+  },
+  "HanYuMatiz_Node_PostgreSQL.zip": {
+    "bytes": 588475,
+    "sha256": "b373ce7ffc247511327a2d8e69f8f464ba711a50fd1b2b3872f3020e82e8fd38"
+  },
+  "LEEME.txt": {
+    "bytes": 680,
+    "sha256": "a4d2a89f6d7d224c855dd11e4d6dc5def4c7111f011e0cf4165893f98b1c25bd"
+  },
+  "Lato-OFL.txt": {
+    "bytes": 4407,
+    "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+  },
+  "NotoSansSC-OFL.txt": {
+    "bytes": 4388,
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+  }
+}
