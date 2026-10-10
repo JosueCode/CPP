@@ -1,0 +1,9 @@
+HanYuMatiz — Vista del proyecto
+
+1. Extrae el ZIP y abre HanYuMatiz_Abrir.html en tu navegador.
+2. Introduce la clave que recibiste en el chat.
+3. Se abrirá la aplicación completa. Usa Guardar HTML para conservar una copia local que no vuelva a pedir la clave.
+
+El archivo de GitHub está cifrado. La clave no está incluida en este ZIP.
+No necesitas Python, instalación ni guardar la configuración del entorno.
+El contenido lingüístico sigue en borrador; la copia descifrada es para tu revisión privada.
