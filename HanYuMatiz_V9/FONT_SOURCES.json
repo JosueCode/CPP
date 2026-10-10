@@ -1,0 +1,106 @@
+{
+  "format": "woff2",
+  "html_source": "/workspace/atelier-v8/HanYuMatiz_V8_Chinese_Atelier.html",
+  "html_source_sha256": "254d71a9be289eccd91cc94efcd39074e005a01a39c6f02801cdf17430a7f290",
+  "cjk_requested": "。一三下东中为也习书五人今以件会体你例元关典再写农冬况冷利北十午南历发可吃合吉听善回图地处夏天好始字孤学宋完定宜寒对小山年廿开很得必忌情惊想感成我择拼挑提改文日旦明春暑月有果案楷次正每比气水汇汉河清满漢点片物状现理由白知确礼秋种程立端篆練练结继续習能自至色节芒花菜落蛰西要觉解言語认许词译试语误说读课谷赤辞辨过返这适选道释重错键阳降隶雨雪需霜霞露青音页须风首高鶩鸟鹜，",
+  "chinese_requested_count": 184,
+  "fonts": [
+    {
+      "file": "Lato-Regular-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Regular.ttf",
+      "bytes": 656568,
+      "sha256": "d636e4683231f931eda222d588e944d082bfd3bdba02f928bee461c0f185b251",
+      "original_family": "Lato",
+      "derivative_family": "AtelierUI",
+      "output_file": "AtelierUI-Regular.woff2",
+      "output_bytes": 96468,
+      "output_sha256": "2e4b7fcb7b7d6be4b4af459230e1dac605ae89fbe6fb3916476f4bdea4ce05e1",
+      "license_file": "Lato-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 935,
+      "cjk_covered_count": 0,
+      "missing_requested_cjk": null,
+      "missing_pinyin_test": "",
+      "missing_spanish_test": "",
+      "variable_axes": {},
+      "copyright_records": [
+        "Copyright (c) 2011-2015 by tyPoland Lukasz Dziedzic (http://www.typoland.com/) with Reserved Font Name \"Lato\". Licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL). "
+      ],
+      "license_records": [
+        "Copyright (c) 2011-2015 by tyPoland Lukasz Dziedzic (http://www.typoland.com/) with Reserved Font Name \"Lato\". Licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL). ",
+        "http://scripts.sil.org/OFL"
+      ]
+    },
+    {
+      "file": "Lato-Bold-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Bold.ttf",
+      "bytes": 656544,
+      "sha256": "8a0aace75d33794eece4b28187bfc1df0bbd2888b5d8a56e01788c8d65d16be1",
+      "original_family": "Lato",
+      "derivative_family": "AtelierUI",
+      "output_file": "AtelierUI-Bold.woff2",
+      "output_bytes": 94188,
+      "output_sha256": "026d6c4cc436385b39733af5cbdc7c9e7828c50c03208ff62ae96dc2d90ab646",
+      "license_file": "Lato-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 935,
+      "cjk_covered_count": 0,
+      "missing_requested_cjk": null,
+      "missing_pinyin_test": "",
+      "missing_spanish_test": "",
+      "variable_axes": {},
+      "copyright_records": [
+        "Copyright (c) 2011-2015 by tyPoland Lukasz Dziedzic (http://www.typoland.com/) with Reserved Font Name \"Lato\". Licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL). "
+      ],
+      "license_records": [
+        "Copyright (c) 2011-2015 by tyPoland Lukasz Dziedzic (http://www.typoland.com/) with Reserved Font Name \"Lato\". Licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL). ",
+        "http://scripts.sil.org/OFL"
+      ]
+    },
+    {
+      "file": "NotoSansSC-original.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+      "bytes": 17772300,
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "original_family": "Noto Sans SC",
+      "derivative_family": "AtelierHanzi",
+      "output_file": "AtelierHanzi.woff2",
+      "output_bytes": 121580,
+      "output_sha256": "a69614c7181b4afd73ebf0f9dd9de5d0c3156808ee653f66c53947793a88b3bd",
+      "license_file": "NotoSansSC-OFL.txt",
+      "license": "SIL Open Font License 1.1",
+      "subset_coverage": 560,
+      "cjk_covered_count": 184,
+      "missing_requested_cjk": "",
+      "missing_pinyin_test": "",
+      "missing_spanish_test": "",
+      "variable_axes": {
+        "wght": {
+          "min": 100.0,
+          "default": 100.0,
+          "max": 900.0
+        }
+      },
+      "copyright_records": [
+        "(c) 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'."
+      ],
+      "license_records": [
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "http://scripts.sil.org/OFL"
+      ]
+    }
+  ],
+  "pinyin_recommendation": "Both AtelierUI (Lato 400/700) and AtelierHanzi (Noto Sans SC variable) cover all tested pinyin tone glyphs. Use AtelierUI for Spanish and pinyin; AtelierHanzi for Chinese.",
+  "licenses": [
+    {
+      "file": "Lato-OFL.txt",
+      "bytes": 4407,
+      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+    },
+    {
+      "file": "NotoSansSC-OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    }
+  ]
+}
