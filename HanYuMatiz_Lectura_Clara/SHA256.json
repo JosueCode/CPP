@@ -1,0 +1,26 @@
+{
+  "HanYuMatiz_Lectura_Clara.html": {
+    "bytes": 1189245,
+    "sha256": "95d95b6f2e4f384aeb50513f258ddf8bf9801b185ce406bfcc1ab94f973b64ba"
+  },
+  "HanYuMatiz_Lectura_Clara.zip": {
+    "bytes": 549919,
+    "sha256": "213da5f43f2961146f5eafd17070b757a3fcebe628f860c1fd48c6b71b0bab0e"
+  },
+  "HanYuMatiz_Node_PostgreSQL.zip": {
+    "bytes": 586524,
+    "sha256": "2961dd59bfb0816339b1d30ea251442eab6d9ae094d8163616935ebb0ec12db1"
+  },
+  "LEEME.txt": {
+    "bytes": 840,
+    "sha256": "2fa575c9f08ebca40b6610c7f9414b3ca5cda363158ec29527e00e28f19ec54f"
+  },
+  "Lato-OFL.txt": {
+    "bytes": 4407,
+    "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+  },
+  "NotoSansSC-OFL.txt": {
+    "bytes": 4388,
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+  }
+}
