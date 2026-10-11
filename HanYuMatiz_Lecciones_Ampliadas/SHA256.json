@@ -1,0 +1,26 @@
+{
+  "HanYuMatiz_Lecciones_Ampliadas.html": {
+    "bytes": 1840755,
+    "sha256": "fa909f442bf37016b03cdd23564038be5c919fce11ac68af06b2897e530962dd"
+  },
+  "HanYuMatiz_Lecciones_Ampliadas.zip": {
+    "bytes": 721249,
+    "sha256": "6e91808c58f062814157755f850fa8ab3d50be9c39112105cb69aa43f7192dd8"
+  },
+  "HanYuMatiz_Node_PostgreSQL.zip": {
+    "bytes": 762424,
+    "sha256": "a1c8a24610835bc03afdcb654b3289f94e7266a3f9831325ac869ef5d5e658f8"
+  },
+  "LEEME.txt": {
+    "bytes": 1308,
+    "sha256": "ea46484b42872799cc5596cb439085ea8716b2972be03e606e32cb4240ac164f"
+  },
+  "Lato-OFL.txt": {
+    "bytes": 4407,
+    "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+  },
+  "NotoSansSC-OFL.txt": {
+    "bytes": 4388,
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+  }
+}

@@ -1,0 +1,14 @@
+HanYuMatiz — 196 palabras y 16 lecciones
+
+Para estudiar, usa este HTML: extrae el ZIP y abre HanYuMatiz_Lecciones_Ampliadas.html con Chrome, Edge o Firefox.
+No necesitas instalar Node.js, PostgreSQL ni Python. Tampoco necesitas una clave ni un servidor para ver la aplicación.
+
+Esta copia incluye 54 pares para comparar y 217 situaciones distintas para practicar en las lecciones.
+Comparar reúne 217 casos sin duplicar los que tienen un ejercicio vinculado. 162 casos originales muestran dos frases traducidas y también se practican en sus lecciones.
+El banco completo conserva 232 ejercicios. Cada lección y la práctica de un par usan una pregunta por situación para evitar repetir el mismo contexto.
+Puedes empezar cada lección directamente y consultar sus palabras, explicaciones y situaciones cuando quieras. Si ambas palabras completan bien la frase, elegir cualquiera cuenta como acierto.
+
+En el HTML sin conexión, Reportar un error guarda un borrador o descarga un JSON; no lo envía al propietario.
+El ZIP Node.js + PostgreSQL es para instalar o desarrollar la web conectada: tiene envío real y bandeja privada. Aún necesita hosting para estar accesible desde Internet.
+
+Las lecciones nuevas son originales. La revisión externa es opcional y no se atribuye un nivel HSK sin comprobarlo.
