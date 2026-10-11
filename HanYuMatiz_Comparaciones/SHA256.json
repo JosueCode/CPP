@@ -1,0 +1,26 @@
+{
+  "HanYuMatiz_Comparaciones.html": {
+    "bytes": 1301514,
+    "sha256": "ececc42482379da32a5de69c187c091b2d9d9ad4ba9fabf64437e29e4fc6f80c"
+  },
+  "HanYuMatiz_Comparaciones.zip": {
+    "bytes": 576129,
+    "sha256": "9d83db659010a2866939a0dc7077bcf5ccf185a72fb695607d77510882817c51"
+  },
+  "HanYuMatiz_Node_PostgreSQL.zip": {
+    "bytes": 614534,
+    "sha256": "9c35d89d3ac96b66b8e758f454341b1c008dd82c87b801eb7b3bbbee9fbd88b2"
+  },
+  "LEEME.txt": {
+    "bytes": 918,
+    "sha256": "344ddaebd3eb635929cb44fb060dcbd0aa3ec86a4f96be5884a5cc5c5c784d31"
+  },
+  "Lato-OFL.txt": {
+    "bytes": 4407,
+    "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+  },
+  "NotoSansSC-OFL.txt": {
+    "bytes": 4388,
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+  }
+}
