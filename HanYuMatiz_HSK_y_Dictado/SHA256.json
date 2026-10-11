@@ -1,0 +1,90 @@
+{
+  "HanYuMatiz_HSK_y_Dictado.html": {
+    "bytes": 21530525,
+    "sha256": "ea5f8fc6e1eafcbb64ee008e3e6f78b6ba9a15fb63c4c1fe4744d619ec8cc8bc"
+  },
+  "HanYuMatiz_HSK_y_Dictado.zip": {
+    "bytes": 9783533,
+    "sha256": "b1146175df249367b8e02b4e33d622a84496a52a44da5d200f4e9f1eeb43c105"
+  },
+  "HanYuMatiz_Node_PostgreSQL.zip": {
+    "bytes": 8876651,
+    "sha256": "d0cb782c605d6337b63dba4e13584ddd5e7a87ab728fdf3a0a3d2cd2f279b4c1"
+  },
+  "LEEME.txt": {
+    "bytes": 4090,
+    "sha256": "29c59e7051fb852610ce37dcd15637f0c33d696afeca1a58b7264aa1be919b8f"
+  },
+  "Lato-OFL.txt": {
+    "bytes": 4407,
+    "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+  },
+  "NotoSansSC-OFL.txt": {
+    "bytes": 4388,
+    "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+  },
+  "HSK-ATTRIBUTION.md": {
+    "bytes": 582,
+    "sha256": "2b04fe712ce2d4cae4514b5a0f433391eb93925dabdc39815a70ae72c97a7540"
+  },
+  "HSK-CC-BY-SA-4.0.txt": {
+    "bytes": 18375,
+    "sha256": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-cmaps-LICENSE.txt": {
+    "bytes": 2080,
+    "sha256": "aa92ab5a472974865a96fd4a4e9c13bb41bf6fe1b309cb6b8da48bc9e19839a2"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-standard_fonts-LICENSE_FOXIT.txt": {
+    "bytes": 1553,
+    "sha256": "b578cdd2345840ada550bd12519533812320d5f1d21cf4c1c7e1b1b0a31c98b7"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-standard_fonts-LICENSE_LIBERATION.txt": {
+    "bytes": 22154,
+    "sha256": "d2c4d5b3e115a519cb58eb691aa64538397e2611f9ebe801392cf9667997e7dc"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_JBIG2.txt": {
+    "bytes": 12862,
+    "sha256": "9e66b7f1b934a28b37f3bc4dac97915de1674271e79a0a88182a18ed9731b4d1"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_OPENJPEG.txt": {
+    "bytes": 2112,
+    "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_PDFJS_JBIG2.txt": {
+    "bytes": 555,
+    "sha256": "aad3cce09842e00e9e11ad5e8fef8cc02fbc3a3768fe2f007443b9cee37aaee5"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_PDFJS_OPENJPEG.txt": {
+    "bytes": 1285,
+    "sha256": "717fc62da03292dbb4dd0c8280bd4ce7bb8550dcf31d772bc93455fb50313425"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_PDFJS_QCMS.txt": {
+    "bytes": 1036,
+    "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS-wasm-LICENSE_QCMS.txt": {
+    "bytes": 1121,
+    "sha256": "36d847ae882f6574ebc72f56a4f354e4f104fde4a584373496482e97d52d31bc"
+  },
+  "LICENCIAS_OCR/LICENSE-PDFJS.txt": {
+    "bytes": 10174,
+    "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+  },
+  "LICENCIAS_OCR/LICENSE-TESSERACT-CORE.txt": {
+    "bytes": 11358,
+    "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+  },
+  "LICENCIAS_OCR/LICENSE-TESSERACT-JS.txt": {
+    "bytes": 11357,
+    "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+  },
+  "LICENCIAS_OCR/LICENSE-TRAINEDDATA-APACHE-2.txt": {
+    "bytes": 11358,
+    "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+  },
+  "LICENCIAS_OCR/NOTICE.txt": {
+    "bytes": 481,
+    "sha256": "618e0e9b232f5390a408eda079bcadbb6f65e5023b1478e94e682a7e0d6784cc"
+  }
+}

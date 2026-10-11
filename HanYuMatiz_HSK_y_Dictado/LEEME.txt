@@ -1,0 +1,26 @@
+HanYuMatiz — lecciones, selección HSK y 听写 · Dictado
+
+PARA ESTUDIAR
+Extrae el ZIP y abre HanYuMatiz_HSK_y_Dictado.html con un navegador actualizado. El HTML incorpora datos, estilos, fuentes, módulos y modelos OCR. No necesitas instalar Node.js, PostgreSQL ni Python.
+
+CONTENIDO
+236 palabras, 20 lecciones, 74 pares y 277 situaciones diferentes dentro de las lecciones. Comparar reúne 277 casos; 222 son ejemplos bilingües originales que también se practican. El banco conserva 292 ejercicios.
+Cada lección presenta sus palabras y dos ejemplos por par antes de empezar. Las opciones están debajo de la frase. Una respuesta que no cumple la intención solicitada recibe una X roja y una explicación clara de qué elegir, por qué y cómo usar la alternativa. Cuando ambas palabras sirven para lo pedido, cualquiera cuenta como acierto.
+
+POR HSK
+La referencia conserva 5.400 posiciones de los niveles 1–6 del programa 2025, mediante una transcripción secundaria identificada. No son 5.400 fichas preparadas ni un curso oficial. El filtro distingue las entradas con contenido y práctica disponibles; seleccionar una palabra inicia los pares que realmente tiene la aplicación. Los niveles se cotejan por hanzi y lectura con tonos, sin inventar etiquetas. Se incluyen fuente, atribución y licencia CC BY-SA 4.0.
+
+DICTADO Y EXTRACCIÓN
+Puedes pegar texto chino, cargar una imagen JPG/PNG/WebP, elegir un PDF o usar la cámara cuando el dispositivo la ofrezca. Las imágenes y PDF se procesan en el navegador; no se envían al servidor ni a una API OCR. Los PDF digitales permiten extraer texto; las páginas escaneadas usan reconocimiento de chino simplificado o tradicional. Debes revisar, corregir y confirmar el texto antes de crear el dictado.
+El OCR puede equivocarse, especialmente con fotografías borrosas, escritura manuscrita, columnas o maquetación compleja. Admite archivos de hasta 25 MB, PDF de hasta 100 páginas y un máximo de 10 páginas seleccionadas por extracción.
+Las frases pueden editarse, dividirse y unirse. Durante la escritura no se muestra el original. La corrección alinea caracteres y distingue sustituciones, omisiones y adiciones; puedes repasar solo las frases falladas. El historial describe diferencias observadas, sin inventar causas lingüísticas.
+
+VOZ Y DATOS LOCALES
+La escucha utiliza SpeechSynthesis y una voz real de mandarín de tu navegador o sistema. Si no hay una voz compatible, el módulo lo indica: no simula audio. Instala o activa una voz china en tu dispositivo. Las voces remotas requieren permiso explícito; su proveedor podría recibir el texto. En el entorno de pruebas no se dispuso de una voz china para verificar audio audible.
+Dictados, respuestas y errores se guardan en este navegador, con límites y avisos si el almacenamiento falla. La entrada admite 20 000 caracteres, pero el presupuesto de 1,5 MiB también debe contener resultados y diferencias; no garantiza que cualquier dictado de ese tamaño pueda corregirse y guardarse completo. Para textos extensos recomendamos bloques de 500 a 2000 caracteres. Si un resultado supera el presupuesto, crea otro dictado con un fragmento menor: tus respuestas guardadas se conservan. No se conservan imágenes ni PDF. Al abrir archivos file://, algunos navegadores pueden limitar voz, trabajadores o persistencia; servir el mismo HTML por HTTPS es la opción recomendada para publicar.
+
+REPORTES Y PUBLICACIÓN
+En el HTML, Reportar un error conserva un borrador o descarga un JSON; no envía el comentario al propietario. Para estudiar usa este ZIP HTML. El ZIP Node.js + PostgreSQL es para desarrollar o publicar la versión conectada con envío real de reportes y bandeja privada. Para publicar un sitio estático, consulta docs/DEPLOY.md en ese paquete: npm run build genera dist/index.html. No hay un hosting externo configurado automáticamente.
+
+LICENCIAS
+La aplicación incluye fuentes OFL, referencia HSK CC BY-SA 4.0 y bibliotecas/modelos OCR con sus licencias y avisos. Las explicaciones y ejemplos son originales; no se atribuye aprobación externa.
