@@ -1,0 +1,533 @@
+{
+  "standardKey": "HSK_SYLLABUS_2025_11_2026_07",
+  "edition": "2025-11",
+  "sourceCommit": "182692ce5a11bc30bdc771835d2f0f27491c25de",
+  "note": "40 términos que no figuraban entre las 196 palabras del catálogo inicial. Son recomendaciones para contenido propio, no material copiado del examen ni una tanda automáticamente publicada. Los autores activos seleccionan la tanda03 por separado.",
+  "pairs": [
+    {
+      "words": [
+        {
+          "zh": "二",
+          "entries": [
+            {
+              "entryId": "hsk2025_48",
+              "level": 1,
+              "pinyin": "èr"
+            }
+          ]
+        },
+        {
+          "zh": "两",
+          "entries": [
+            {
+              "entryId": "hsk2025_111",
+              "level": 1,
+              "pinyin": "liǎng"
+            },
+            {
+              "entryId": "hsk2025_1465",
+              "level": 4,
+              "pinyin": "liǎng"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "这",
+          "entries": [
+            {
+              "entryId": "hsk2025_279",
+              "level": 1,
+              "pinyin": "zhè"
+            }
+          ]
+        },
+        {
+          "zh": "那",
+          "entries": [
+            {
+              "entryId": "hsk2025_131",
+              "level": 1,
+              "pinyin": "nà"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "这里",
+          "entries": [
+            {
+              "entryId": "hsk2025_282",
+              "level": 1,
+              "pinyin": "zhèlǐ"
+            }
+          ]
+        },
+        {
+          "zh": "那里",
+          "entries": [
+            {
+              "entryId": "hsk2025_136",
+              "level": 1,
+              "pinyin": "nàlǐ"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "哪里",
+          "entries": [
+            {
+              "entryId": "hsk2025_137",
+              "level": 1,
+              "pinyin": "nǎlǐ"
+            }
+          ]
+        },
+        {
+          "zh": "哪儿",
+          "entries": [
+            {
+              "entryId": "hsk2025_141",
+              "level": 1,
+              "pinyin": "nǎr"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "我们",
+          "entries": [
+            {
+              "entryId": "hsk2025_222",
+              "level": 1,
+              "pinyin": "wǒmen"
+            }
+          ]
+        },
+        {
+          "zh": "咱们",
+          "entries": [
+            {
+              "entryId": "hsk2025_963",
+              "level": 3,
+              "pinyin": "zánmen"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "和",
+          "entries": [
+            {
+              "entryId": "hsk2025_77",
+              "level": 1,
+              "pinyin": "hé"
+            }
+          ]
+        },
+        {
+          "zh": "跟",
+          "entries": [
+            {
+              "entryId": "hsk2025_344",
+              "level": 2,
+              "pinyin": "gēn"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "但是",
+          "entries": [
+            {
+              "entryId": "hsk2025_331",
+              "level": 2,
+              "pinyin": "dànshì"
+            }
+          ]
+        },
+        {
+          "zh": "不过",
+          "entries": [
+            {
+              "entryId": "hsk2025_1053",
+              "level": 4,
+              "pinyin": "búguò"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "因为",
+          "entries": [
+            {
+              "entryId": "hsk2025_474",
+              "level": 2,
+              "pinyin": "yīnwèi"
+            }
+          ]
+        },
+        {
+          "zh": "由于",
+          "entries": [
+            {
+              "entryId": "hsk2025_1893",
+              "level": 4,
+              "pinyin": "yóuyú"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "所以",
+          "entries": [
+            {
+              "entryId": "hsk2025_439",
+              "level": 2,
+              "pinyin": "suǒyǐ"
+            }
+          ]
+        },
+        {
+          "zh": "因此",
+          "entries": [
+            {
+              "entryId": "hsk2025_1867",
+              "level": 4,
+              "pinyin": "yīncǐ"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "如果",
+          "entries": [
+            {
+              "entryId": "hsk2025_819",
+              "level": 3,
+              "pinyin": "rúguǒ"
+            }
+          ]
+        },
+        {
+          "zh": "假如",
+          "entries": [
+            {
+              "entryId": "hsk2025_2562",
+              "level": 5,
+              "pinyin": "jiǎrú"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "还是",
+          "entries": [
+            {
+              "entryId": "hsk2025_352",
+              "level": 2,
+              "pinyin": "háishi"
+            }
+          ]
+        },
+        {
+          "zh": "或者",
+          "entries": [
+            {
+              "entryId": "hsk2025_685",
+              "level": 3,
+              "pinyin": "huòzhě"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "再",
+          "entries": [
+            {
+              "entryId": "hsk2025_270",
+              "level": 1,
+              "pinyin": "zài"
+            }
+          ]
+        },
+        {
+          "zh": "又",
+          "entries": [
+            {
+              "entryId": "hsk2025_942",
+              "level": 3,
+              "pinyin": "yòu"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "已经",
+          "entries": [
+            {
+              "entryId": "hsk2025_472",
+              "level": 2,
+              "pinyin": "yǐjīng"
+            }
+          ]
+        },
+        {
+          "zh": "曾经",
+          "entries": [
+            {
+              "entryId": "hsk2025_2097",
+              "level": 5,
+              "pinyin": "céngjīng"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "刚",
+          "entries": [
+            {
+              "entryId": "hsk2025_639",
+              "level": 3,
+              "pinyin": "gāng"
+            }
+          ]
+        },
+        {
+          "zh": "刚才",
+          "entries": [
+            {
+              "entryId": "hsk2025_640",
+              "level": 3,
+              "pinyin": "gāngcái"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "时候",
+          "entries": [
+            {
+              "entryId": "hsk2025_187",
+              "level": 1,
+              "pinyin": "shíhou"
+            }
+          ]
+        },
+        {
+          "zh": "时间",
+          "entries": [
+            {
+              "entryId": "hsk2025_188",
+              "level": 1,
+              "pinyin": "shíjiān"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "一会儿",
+          "entries": [
+            {
+              "entryId": "hsk2025_471",
+              "level": 2,
+              "pinyin": "yíhuìr"
+            }
+          ]
+        },
+        {
+          "zh": "一下",
+          "entries": [
+            {
+              "entryId": "hsk2025_259",
+              "level": 1,
+              "pinyin": "yíxià"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "以前",
+          "entries": [
+            {
+              "entryId": "hsk2025_934",
+              "level": 3,
+              "pinyin": "yǐqián"
+            }
+          ]
+        },
+        {
+          "zh": "从前",
+          "entries": [
+            {
+              "entryId": "hsk2025_2202",
+              "level": 5,
+              "pinyin": "cóngqián"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "以后",
+          "entries": [
+            {
+              "entryId": "hsk2025_926",
+              "level": 3,
+              "pinyin": "yǐhòu"
+            }
+          ]
+        },
+        {
+          "zh": "之后",
+          "entries": [
+            {
+              "entryId": "hsk2025_1946",
+              "level": 4,
+              "pinyin": "zhīhòu"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "早上",
+          "entries": [
+            {
+              "entryId": "hsk2025_275",
+              "level": 1,
+              "pinyin": "zǎoshang"
+            }
+          ]
+        },
+        {
+          "zh": "上午",
+          "entries": [
+            {
+              "entryId": "hsk2025_178",
+              "level": 1,
+              "pinyin": "shàngwǔ"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    },
+    {
+      "words": [
+        {
+          "zh": "下午",
+          "entries": [
+            {
+              "entryId": "hsk2025_237",
+              "level": 1,
+              "pinyin": "xiàwǔ"
+            }
+          ]
+        },
+        {
+          "zh": "晚上",
+          "entries": [
+            {
+              "entryId": "hsk2025_217",
+              "level": 1,
+              "pinyin": "wǎnshang"
+            }
+          ]
+        }
+      ],
+      "scope": "original_content_candidate",
+      "status": "recommendation_not_published"
+    }
+  ]
+}

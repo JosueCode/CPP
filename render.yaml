@@ -1,0 +1,25 @@
+# Connected application only. PostgreSQL is provided separately by Neon Free.
+# There is no paid database, disk, cron job, worker, or pre-deploy command here.
+services:
+  - type: web
+    name: hanyumatiz
+    runtime: node
+    plan: free
+    repo: https://github.com/JosueCode/CPP
+    branch: hanyumatiz-publicacion-gratis
+    rootDir: HanYuMatiz_App
+    buildCommand: npm ci --cache .local/npm-cache --no-fund --no-audit
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: false
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: HANYUMATIZ_DATABASE_URL
+        sync: false
+      - key: HANYUMATIZ_ADMIN_USER
+        value: hanyumatiz
+      - key: HANYUMATIZ_ADMIN_PASSWORD
+        generateValue: true

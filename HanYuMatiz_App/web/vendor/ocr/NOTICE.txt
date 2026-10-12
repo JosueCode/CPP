@@ -1,0 +1,6 @@
+HanYuMatiz: bibliotecas de OCR y PDF procesadas en el navegador.
+Tesseract.js y Tesseract.js-core: Apache-2.0.
+Modelos chinos: traineddata de Tesseract (Apache-2.0), distribuciones npm @tesseract.js-data (metadatos MIT).
+PDF.js: Apache-2.0; los archivos auxiliares conservan sus licencias adjuntas (fuentes, CMaps, OpenJPEG, JBIG2 y QCMS).
+Versiones, integridad npm y SHA-256 por recurso: manifest.json y npm-lock.json.
+No se incluye contenido de libros ni servicios OCR externos.

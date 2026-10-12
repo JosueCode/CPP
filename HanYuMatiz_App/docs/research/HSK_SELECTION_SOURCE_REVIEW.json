@@ -1,0 +1,165 @@
+{
+  "sessionDate": "2026-10-11",
+  "standardKey": "HSK_SYLLABUS_2025_11_2026_07",
+  "edition": "2025-11",
+  "officialDirectVerified": false,
+  "officialAccessAttempts": [
+    {
+      "url": "https://www.chinesetest.cn/syllabus",
+      "tlsVerification": true,
+      "httpStatus": null,
+      "error": "URLError(OSError('Tunnel connection failed: 403 Forbidden'))"
+    },
+    {
+      "url": "https://hsk.cn-bj.ufileos.com/3.0/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B21219.pdf",
+      "tlsVerification": true,
+      "httpStatus": null,
+      "error": "URLError(OSError('Tunnel connection failed: 403 Forbidden'))"
+    },
+    {
+      "url": "https://media.mandarinzone.com/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B21219.pdf",
+      "tlsVerification": true,
+      "httpStatus": null,
+      "error": "URLError(OSError('Tunnel connection failed: 403 Forbidden'))"
+    },
+    {
+      "url": "https://hsk.cn-bj.ufileos.com/3.0/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B2%EF%BC%88%E8%AF%8D%E6%B1%87%E3%80%81%E6%B1%89%E5%AD%97%E3%80%81%E8%AF%AD%E6%B3%95%EF%BC%89.pdf",
+      "tlsVerification": true,
+      "httpStatus": null,
+      "error": "URLError(OSError('Tunnel connection failed: 403 Forbidden'))"
+    }
+  ],
+  "secondarySource": {
+    "repository": "https://github.com/krmanik/HSK-3.0",
+    "commit": "182692ce5a11bc30bdc771835d2f0f27491c25de",
+    "readmeSection": "2025-11",
+    "readmeLinksOfficialSyllabus": true,
+    "tlsVerification": true,
+    "httpStatus": 200,
+    "license": "CC-BY-SA-4.0",
+    "licenseUri": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/License.md",
+    "files": [
+      {
+        "id": "krmanik_hsk2025_level_1",
+        "level": 1,
+        "file": "sources/HSK_Level_1_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_1_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_1_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_1_words.txt",
+        "sha256": "02d551ce2024607d6bae3695581d74bd449574bb1759402a58e7de47817ff307",
+        "bytes": 7324
+      },
+      {
+        "id": "krmanik_hsk2025_level_2",
+        "level": 2,
+        "file": "sources/HSK_Level_2_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_2_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_2_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_2_words.txt",
+        "sha256": "07ca5598cd394aedd2ba6819a67f0fe05ec25cc08e04d132a37ee0048fd3a5c0",
+        "bytes": 5468
+      },
+      {
+        "id": "krmanik_hsk2025_level_3",
+        "level": 3,
+        "file": "sources/HSK_Level_3_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_3_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_3_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_3_words.txt",
+        "sha256": "975b6821199e57bc7d16a84f26a3d9a152da0123948776d35f93511060de2074",
+        "bytes": 13321
+      },
+      {
+        "id": "krmanik_hsk2025_level_4",
+        "level": 4,
+        "file": "sources/HSK_Level_4_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_4_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_4_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_4_words.txt",
+        "sha256": "00b7322c16e31f30c1574c6c04d4cf03279e05319392a6516dcfa5f6e1495727",
+        "bytes": 28371
+      },
+      {
+        "id": "krmanik_hsk2025_level_5",
+        "level": 5,
+        "file": "sources/HSK_Level_5_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_5_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_5_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_5_words.txt",
+        "sha256": "7b4df8e13696e985fde3843c0597eff061084d4e8f9bfd9601d8e244b017a9ca",
+        "bytes": 45469
+      },
+      {
+        "id": "krmanik_hsk2025_level_6",
+        "level": 6,
+        "file": "sources/HSK_Level_6_words.tsv",
+        "upstreamPath": "New HSK (2025)/HSK Words/temp/HSK_Level_6_words.txt",
+        "upstreamUrl": "https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_6_words.txt",
+        "rawUrl": "https://raw.githubusercontent.com/krmanik/HSK-3.0/182692ce5a11bc30bdc771835d2f0f27491c25de/New%20HSK%20(2025)/HSK%20Words/temp/HSK_Level_6_words.txt",
+        "sha256": "b6c8045e236d6e50b4412386b95db18cedf53a5d416c26c72d0df5ddf9cfbb8f",
+        "bytes": 49906
+      }
+    ]
+  },
+  "referenceCounts": {
+    "entries": 5400,
+    "entriesByLevel": [
+      300,
+      200,
+      500,
+      1000,
+      1600,
+      1800
+    ],
+    "positions": "1 through 5400, no gaps",
+    "uniqueSpellingsAfterHomographMarkerRemoval": 5334,
+    "repeatedSourceRowsForLaterPOS": 83,
+    "rawLevelTableRowCounts": [
+      300,
+      204,
+      507,
+      1019,
+      1638,
+      1815
+    ],
+    "numberedRowConflicts": 0
+  },
+  "productAtInitial196WordCatalogue": {
+    "matchingWords": 186,
+    "matchedPositions": 189,
+    "matchingWordsByLevel": [
+      47,
+      18,
+      51,
+      40,
+      25,
+      7
+    ],
+    "unlistedExactForms": [
+      "发觉",
+      "聊天",
+      "碰面",
+      "联络",
+      "记住",
+      "接到",
+      "提议",
+      "预备",
+      "回想"
+    ],
+    "readingDiscrepancy": [
+      {
+        "zh": "留下",
+        "productPinyin": "liúxià",
+        "referencePinyin": "liúxia",
+        "assignedLevel": null
+      }
+    ],
+    "note": "These are baseline counts before the concurrent40-word batch03. Live catalogue rebuild recalculates counts."
+  },
+  "limitations": [
+    "PDF contents and implementation date were not verified directly because the official domains and declared mirror were rejected by the proxy.",
+    "Source is a versioned secondary transcription expressly identified as2025-11, not the different2021standard.",
+    "Matching the same word and reading verifies an attributed vocabulary position, not every listed sense, exam readiness, or complete curriculum.",
+    "No third-party definitions, example sentences, exercises, images, or audio were imported."
+  ]
+}

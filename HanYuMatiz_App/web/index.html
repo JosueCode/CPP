@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="HanYuMatiz: aprende a elegir palabras en chino según lo que quieres expresar.">
+  <title>HanYuMatiz · Aprender chino</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/dictation.css">
+  <script type="module" src="/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Ir al contenido</a>
+  <header class="site-header platform-header">
+    <a href="#learn" class="brand"><span class="brand-mark zh" lang="zh-Hans" aria-hidden="true">中</span>HanYuMatiz</a>
+    <span class="header-course">Chino · Español</span>
+    <span id="environment" class="environment">Cargando…</span>
+  </header>
+  <div class="workspace-layout">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <nav id="navigation">
+        <a href="#learn" data-view="learn"><span class="nav-symbol" aria-hidden="true">学</span>Aprender</a>
+        <a href="#dictionary" data-view="dictionary"><span class="nav-symbol" aria-hidden="true">词</span>Diccionario</a>
+        <a href="#compare" data-view="compare"><span class="nav-symbol" aria-hidden="true">辨</span>Comparar</a>
+        <a href="#review" data-view="review"><span class="nav-symbol" aria-hidden="true">习</span>Repasar</a>
+        <a href="#dictation" data-view="dictation" aria-label="听写 · Dictado"><span class="nav-symbol" aria-hidden="true">听</span>Dictado</a>
+      </nav>
+      <div class="sidebar-note"><strong>Una palabra, una intención.</strong><p>Entiende la diferencia.<br>Úsala en contexto.</p></div>
+      <button id="aboutButton" class="text-button sidebar-about" type="button">Sobre HanYuMatiz</button>
+    </aside>
+    <main id="content" tabindex="-1"><div class="loading" role="status">Preparando tu espacio de chino…</div></main>
+  </div>
+  <dialog id="about" aria-labelledby="aboutTitle">
+    <div class="dialog-header"><h2 id="aboutTitle">Aprender a distinguir</h2><button id="closeAbout" class="icon-button" aria-label="Cerrar" type="button">×</button></div>
+    <div class="dialog-body"><p>HanYuMatiz trabaja las palabras cercanas en significado: qué comparten, cuándo encajan y qué cambia al elegir una u otra.</p><p id="aboutStatus"></p><p>El progreso y tu selección de palabras se guardan en este navegador, sin cuenta. Las revisiones editoriales se guardan por separado.</p><p>La selección HSK usa el programa de noviembre de 2025, con julio de 2026 como fecha de aplicación declarada. Sus niveles proceden de una transcripción identificada; no se ha cotejado directamente el PDF oficial. Las palabras se vinculan por escritura y pronunciación. La referencia no implica que exista un curso completo del HSK.</p><p>Referencia léxica: <a href="https://github.com/krmanik/HSK-3.0/blob/182692ce5a11bc30bdc771835d2f0f27491c25de/README.md">HSK 3.0 Words lists, Mani (krmanik)</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Se normalizaron sus tablas de vocabulario. Las explicaciones y los ejercicios son originales de HanYuMatiz.</p><p>Tipografía: Lato y Noto Sans SC, con licencia SIL OFL. Interfaz y recursos gráficos propios.</p></div>
+  </dialog>
+  <div id="announcer" class="sr-only" aria-live="polite"></div>
+</body>
+</html>

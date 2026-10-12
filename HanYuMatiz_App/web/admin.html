@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Reportes privados · HanYuMatiz</title>
+  <link rel="stylesheet" href="/admin.css">
+  <script type="module" src="/admin.js"></script>
+</head>
+<body>
+  <header class="topbar"><a href="/" class="brand">hanyu<span>matiz.</span></a><span>Administración privada</span></header>
+  <main>
+    <div class="heading"><div><p class="eyebrow">CONTENIDO Y MATICES</p><h1>Reportes de la comunidad</h1><p>Lee el contexto, evalúa la observación y deja constancia de tu decisión.</p></div><button id="refresh" type="button">Actualizar</button></div>
+    <p class="privacy-note">Los comentarios y los datos de contacto solo aparecen en esta bandeja privada.</p>
+    <nav class="filters" aria-label="Filtrar reportes">
+      <button type="button" data-status="pending" aria-pressed="true">Pendientes <span data-count="pending">0</span></button>
+      <button type="button" data-status="reviewing" aria-pressed="false">En revisión <span data-count="reviewing">0</span></button>
+      <button type="button" data-status="resolved" aria-pressed="false">Resueltos <span data-count="resolved">0</span></button>
+      <button type="button" data-status="dismissed" aria-pressed="false">Descartados <span data-count="dismissed">0</span></button>
+      <button type="button" data-status="all" aria-pressed="false">Todos</button>
+    </nav>
+    <p id="adminStatus" role="status" aria-live="polite"></p>
+    <div id="reports" aria-label="Reportes recibidos"></div>
+    <div class="pagination"><button type="button" id="previous" disabled>← Anterior</button><span id="range"></span><button type="button" id="next" disabled>Siguiente →</button></div>
+  </main>
+</body>
+</html>

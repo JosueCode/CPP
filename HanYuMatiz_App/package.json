@@ -1,0 +1,15 @@
+{
+  "name": "hanyumatiz-platform",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "db:start": "node tools/start_postgres.mjs",
+    "db:import": "node tools/import_postgres.mjs",
+    "start": "node server.mjs",
+    "build": "node tools/build_preview.mjs --output-dir dist --filename index.html",
+    "test:backend": "node --test tests/backend*.mjs"
+  },
+  "dependencies": { "pg": "8.16.3" },
+  "engines": { "node": ">=22" }
+}
