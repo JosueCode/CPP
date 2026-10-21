@@ -1,0 +1,15 @@
+HANYUMATIZ · PDF Y DICTADO
+
+1. Descomprime este ZIP y abre HanYuMatiz_PDF_Corregido.html en un navegador actualizado.
+2. Ve a Dictado → Crear un dictado → Subir PDF. Selecciona un documento y sus páginas.
+3. Pulsa Extraer texto, corrige el reconocimiento y confirma el texto revisado.
+4. Pulsa Revisar frases para preparar la práctica.
+
+No instales Node.js ni Python para estudiar. El HTML incorpora el catálogo, las fuentes y los motores OCR.
+PDF: hasta 25 MB, 100 páginas por documento y 10 páginas por extracción. Los documentos con contraseña deben abrirse primero en otra aplicación y guardarse sin ella.
+Los PDF e imágenes se procesan en este navegador. Revisa siempre los caracteres: el reconocimiento puede equivocarse. Solo se guarda el texto que confirmes.
+La escucha necesita una voz real de mandarín del navegador/sistema; las voces remotas requieren tu consentimiento.
+Si el navegador bloquea archivos locales, prueba un navegador actualizado o una copia del mismo HTML publicada por HTTPS. No es necesario convertir el producto a Python.
+
+Las licencias de bibliotecas, modelos, fuentes y referencia HSK están incorporadas en el HTML. Los reportes de esta edición descargable se guardan como borradores para exportar.
+El ZIP Fuente contiene el proyecto para desarrollo; no es necesario para estudiar ni implica que exista una web publicada.

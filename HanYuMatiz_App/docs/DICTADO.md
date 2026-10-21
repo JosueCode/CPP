@@ -4,8 +4,8 @@ El módulo amplía el frontend HTML, CSS y JavaScript existente. No requiere Pyt
 
 ## Recorrido del estudiante
 
-1. Abre **Dictado → Crear dictado** y pega su propio texto, carga una imagen o elige un PDF.
-2. Si usa un archivo, inicia la extracción local, revisa el texto reconocido y confirma la versión corregida. El reconocimiento nunca genera automáticamente un dictado sin esa revisión.
+1. Abre **Dictado → Crear un dictado** y pega tu texto, carga una imagen o elige **Subir PDF**.
+2. Para un PDF, selecciona el archivo e indica las páginas, por ejemplo `1-3, 5`. El contador confirma cuáles se extraerán y avisa si la selección no es válida. Puedes usar todas las páginas, las primeras diez o consultar el original y extraer solo la página visible. Pulsa **Extraer texto**, revisa el texto reconocido y confirma la versión corregida. Después pulsa **Revisar frases**. El reconocimiento nunca crea automáticamente un dictado sin esa revisión.
 3. Revisa las frases y, si hace falta, las edita, divide en la posición del cursor, une con la siguiente o elimina.
 4. Elige una voz de mandarín disponible en su dispositivo, velocidad, numeración, reproducción al avanzar y evaluación opcional de puntuación.
 5. Escucha y escribe una frase cada vez. Durante esta sesión el original no se inserta en el DOM, ni se oculta solamente con CSS.
@@ -13,6 +13,18 @@ El módulo amplía el frontend HTML, CSS y JavaScript existente. No requiere Pyt
 7. Repasa únicamente las frases falladas o sin responder, o repite el dictado completo. Puede recuperar una sesión pendiente y consultar sus errores en el mismo navegador.
 
 Las respuestas se guardan al escribir, al cambiar de frase y al salir. Ctrl + Intro o ⌘ + Intro avanza; no avanza mientras el método de entrada está componiendo caracteres chinos. Intro normal sigue permitiendo saltos de línea. Se conservan las respuestas previas al retroceder.
+
+## Importación de PDF
+
+El documento puede tener hasta 25 MB y 100 páginas. Selecciona como máximo diez páginas por extracción y conserva solo el texto que quieras practicar. La entrada final admite hasta 20 000 caracteres; para preparar una práctica manejable conviene empezar con unas pocas frases.
+
+**Consultar el PDF original** incluye anterior, siguiente y selector de página. Esa vista sirve para comprobar el documento sin añadir todas sus páginas al dictado. El campo de selección indica qué páginas se procesarán. Los PDF con texto seleccionable se leen directamente; las páginas escaneadas necesitan reconocimiento de imagen y suelen tardar más. Los documentos mixtos pueden necesitar ambos recorridos. Elige chino simplificado o tradicional según el material.
+
+Si una página escaneada aparece de lado, usa **Girar 90°** hasta verla derecha antes de extraer. El giro se aplica a las páginas seleccionadas; si el documento mezcla orientaciones, extráelas por grupos. Después del reconocimiento, las opciones del archivo quedan plegadas bajo **Archivo de origen** para dejar el editor a mano. Puedes desplegarlas para cambiar la selección o repetir la extracción.
+
+Si cancelas la apertura o aparece un error, **Reintentar abrir PDF** vuelve a usar el archivo seleccionado. También puedes elegir otro archivo. Un PDF con contraseña debe abrirse y guardarse sin contraseña en otra aplicación antes de importarlo. Un archivo vacío, dañado, demasiado grande o sin texto chino utilizable muestra un error; no se sustituye por texto inventado.
+
+Revisa siempre el resultado junto al original. El OCR puede confundir caracteres, omitir líneas o reconocer encabezados y números de página que no interesan. Puedes corregirlos en el editor antes de confirmar; la confirmación se desmarca si vuelves a editar el texto. **Revisar frases** abre la preparación y todavía no inicia el ejercicio.
 
 ## Archivos y responsabilidades
 
@@ -53,7 +65,15 @@ Los datos locales admiten hasta 20 ejercicios, 50 sesiones y 500 diferencias dis
 
 La versión conectada mantiene el servidor Node.js del proyecto. Los módulos JS, el CSS y los recursos OCR deben servirse en el mismo origen; no utilices rutas del disco del entorno de desarrollo. Ejecuta la importación SQL y `npm start` según el README del proyecto, configura las variables de entorno y termina HTTPS en el hosting o proxy existente. El módulo Dictado no necesita acceso SQL ni envía los textos personales al backend.
 
-El generador del HTML autónomo incorpora los módulos y los recursos que requiera su empaquetador. Para el uso del estudiante basta abrir ese HTML; no necesita instalar Node.js. La disponibilidad de voces sigue dependiendo del navegador y el sistema operativo. La generación y las pruebas de la entrega se documentan en los reportes de la pasada; esta guía no afirma que un hosting externo esté desplegado.
+El generador del HTML autónomo incorpora los módulos y los recursos OCR. Para el uso del estudiante basta abrir ese HTML en un navegador actualizado; no necesita instalar Node.js. Si un navegador o un visor de archivos bloquea recursos locales, debe abrirse el HTML con un navegador compatible o servirse por HTTPS. La disponibilidad de voces sigue dependiendo del navegador y el sistema operativo.
+
+`node tools/package_delivery.mjs --html dist/index.html --output-dir /workspace/shared/downloads/HanYuMatiz_PDF_Corregido` genera el ZIP de estudio y el ZIP de fuente con sus hashes. El empaquetador incluye archivos públicos por una lista explícita: conserva licencias, fuentes y modelos, y excluye `.local`, `node_modules`, `dist`, `reports`, `.env`, volúmenes y documentos personales.
+
+Las pruebas deben distinguir el HTML exacto servido por HTTP de la apertura directa por `file://`. En este entorno, Chromium gestionado bloquea `file://` por política administrativa antes de cargar el producto; una prueba HTTP satisfactoria no equivale a haber comprobado ese modo. Las muestras de pruebas creadas expresamente contienen texto original; las imágenes sintéticas no se presentan como fotografías de un libro real. La generación y las pruebas de la entrega no implican que exista un hosting externo desplegado.
+
+La regresión del HTML compilado se ejecuta con `python3 tools/test_pdf_browser.py --html dist/index.html --label final --mode both --strict`. Comprueba reconocimiento real, selección y giro de páginas, cancelación/reintento, revisión obligatoria, práctica y diseño móvil. Registra por separado los modos probados y los omitidos por política del entorno.
+
+El ZIP de fuente incluye únicamente las muestras sintéticas identificadas en `tests/fixtures/pdf/manifest.json`, con sus hashes verificados. Se pueden regenerar con `python3 tools/test_pdf_browser.py --generate-fixtures`; ese script de QA necesita Playwright, Pillow, pypdf y reportlab, además de Chromium. Python no interviene en el uso de la aplicación.
 
 ## Selectores para verificar la interfaz real
 

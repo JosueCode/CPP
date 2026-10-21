@@ -23,6 +23,7 @@ const formatDate = value => {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('es', { day: 'numeric', month: 'short' });
 };
+const formatFileSize = bytes => bytes >= 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1).replace('.', ',')} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
 const statusLabel = status => ({ correct: 'Correcta', incorrect: 'Con errores', unanswered: 'Sin responder' }[status] || 'Pendiente');
 const safeError = error => error instanceof RangeError ? error.message : 'No se pudo completar esta acción. Tus respuestas se conservan.';
 
@@ -43,8 +44,9 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
   let live = null;
   let message = '';
   let importMethod = 'text';
-  let ocr = { file: null, document: null, result: null, preview: '', pages: '1', script: 'simplified', confirmed: false, busy: false, progress: 0, message: '' };
+  let ocr = { file: null, document: null, result: null, preview: '', previewPage: 1, rotation: 0, previewRotation: 0, previewBusy: false, previewMessage: '', pages: '1', script: 'simplified', confirmed: false, busy: false, progress: 0, message: '' };
   let ocrAbort = null;
+  let previewAbort = null;
   let previewURL = null;
   const store = createDictationStore({ onStatus: status => {
     storageMessage = status.persistent ? '' : status.message;
@@ -79,7 +81,7 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     if (tabs) {
       const nav = el('nav', 'dictation-tabs'); nav.setAttribute('aria-label', 'Secciones del dictado');
       for (const [value, label] of [['home', 'Mis dictados'], ['new', 'Crear dictado'], ['history', 'Mis errores']]) {
-        const item = action(label, () => { if (!flushAnswer()) return; player.stop(); if (ocr.busy) cancelOcr(); mode = value; message = ''; render(); }, 'dictation-tab');
+        const item = action(label, () => { if (!flushAnswer()) return; player.stop(); cancelOcr(); mode = value; message = ''; render(); }, 'dictation-tab');
         item.dataset.dictationTab = value; item.setAttribute('aria-current', mode === value || (value === 'new' && mode === 'preview') ? 'page' : 'false');
         nav.append(item);
       }
@@ -98,33 +100,84 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     const text = el('p', 'dictation-privacy', 'Tus textos y respuestas se guardan en este navegador; no se publican ni se sincronizan. La voz depende de tu dispositivo. Para una voz remota o de origen desconocido se requiere tu permiso.');
     root.append(text);
   }
+  function disposeDocument(document) {
+    // PDF.js cleanup is asynchronous, including when a pending import was replaced.
+    Promise.resolve().then(() => document?.dispose?.()).catch(() => {});
+  }
+  function cancelPreview() {
+    previewAbort?.abort(); previewAbort = null; ocr.previewBusy = false; ocr.previewMessage = '';
+  }
   function releaseDocument() {
-    ocr.document?.dispose?.();
-    ocr.document = null;
+    cancelPreview(); disposeDocument(ocr.document); ocr.document = null;
     if (previewURL) URL.revokeObjectURL(previewURL);
     previewURL = null;
   }
   function cancelOcr() {
-    if (ocrAbort) ocrAbort.abort();
-    ocrAbort = null;
-    if (ocr.busy) { ocr.busy = false; ocr.message = 'Procesamiento cancelado. Puedes elegir otro archivo.'; updateOcrProgress(); }
+    cancelPreview();
+    ocrAbort?.abort(); ocrAbort = null;
+    if (ocr.busy) {
+      ocr.busy = false;
+      ocr.message = importMethod === 'pdf' && !ocr.document ? 'Carga cancelada. Pulsa «Reintentar abrir PDF» para continuar con este archivo.' : 'Extracción cancelada. Puedes volver a intentarlo; el texto anterior se conserva.';
+    }
+    updateOcrProgress();
   }
   function updateOcrProgress(value = null) {
     if (value) {
       ocr.progress = Math.max(0, Math.min(1, Number(value.progress) || 0));
       ocr.message = value.message || value.status || 'Procesando el documento…';
     }
+    const section = container.querySelector('#dictationOcrImport'); if (section) section.setAttribute('aria-busy', String(ocr.busy));
     const label = container.querySelector('#dictationOcrProgressLabel'); if (label) label.textContent = ocr.message;
-    const progress = container.querySelector('#dictationOcrProgress'); if (progress) { progress.value = ocr.progress; progress.hidden = !ocr.busy; }
+    const progress = container.querySelector('#dictationOcrProgress');
+    if (progress) {
+      progress.hidden = !ocr.busy;
+      if (ocr.busy && ocr.progress === 0) progress.removeAttribute('value'); else progress.value = ocr.progress;
+    }
     const cancel = container.querySelector('#dictationOcrCancel'); if (cancel) cancel.hidden = !ocr.busy;
-    const extract = container.querySelector('#dictationOcrExtract'); if (extract) extract.disabled = ocr.busy || !ocr.file || (importMethod === 'pdf' && !ocr.document);
+    const extract = container.querySelector('#dictationOcrExtract');
+    if (extract) {
+      extract.disabled = ocr.busy || !ocr.file;
+      extract.textContent = importMethod === 'pdf' && ocr.file && !ocr.document ? 'Reintentar abrir PDF' : ocr.result ? 'Extraer de nuevo' : 'Extraer texto';
+    }
     const script = container.querySelector('#dictationOcrScript'); if (script) script.disabled = ocr.busy;
     const pages = container.querySelector('#dictationPdfPages'); if (pages) pages.disabled = ocr.busy;
+    container.querySelectorAll('[data-pdf-pages-choice]').forEach(button => { button.disabled = ocr.busy; });
+    updatePdfPreview();
+  }
+  function updatePdfPreview() {
+    const image = container.querySelector('#dictationSourceImage'); if (image && ocr.preview && image.src !== ocr.preview) image.src = ocr.preview;
+    if (image && importMethod === 'pdf') image.alt = `Página ${ocr.previewPage} del PDF seleccionado`;
+    const select = container.querySelector('#dictationPdfPreviewPage');
+    if (select) { select.value = String(ocr.previewPage); select.disabled = ocr.busy || ocr.previewBusy; }
+    const previous = container.querySelector('#dictationPdfPreviewPrevious'); if (previous) previous.disabled = ocr.busy || ocr.previewBusy || ocr.previewPage <= 1;
+    const next = container.querySelector('#dictationPdfPreviewNext'); if (next) next.disabled = ocr.busy || ocr.previewBusy || ocr.previewPage >= (ocr.document?.pageCount || 0);
+    const usePage = container.querySelector('#dictationPdfUsePreview'); if (usePage) usePage.disabled = ocr.busy || ocr.previewBusy;
+    const rotate = container.querySelector('#dictationPdfRotate'); if (rotate) rotate.disabled = ocr.busy || ocr.previewBusy;
+    const rotation = container.querySelector('#dictationPdfRotationStatus'); if (rotation) { rotation.hidden = !ocr.rotation; rotation.textContent = `Giro adicional de ${ocr.rotation}° aplicado a todas las páginas de la extracción.`; }
+    const extract = container.querySelector('#dictationOcrExtract'); if (extract) extract.disabled = ocr.busy || ocr.previewBusy || !ocr.file;
+    const status = container.querySelector('#dictationPdfPreviewStatus'); if (status) status.textContent = ocr.previewMessage;
+    const preview = container.querySelector('.dictation-source-preview'); if (preview) preview.setAttribute('aria-busy', String(ocr.previewBusy));
+  }
+  async function showPdfPage(number, { rotation = ocr.rotation } = {}) {
+    const document = ocr.document;
+    if (!document || ocr.busy || !Number.isInteger(number) || number < 1 || number > document.pageCount) return;
+    cancelPreview();
+    if (number === ocr.previewPage && rotation === ocr.previewRotation && ocr.preview) { ocr.previewMessage = ''; updatePdfPreview(); return; }
+    const controller = new AbortController(); previewAbort = controller;
+    ocr.previewBusy = true; ocr.previewMessage = `Cargando la página ${number}…`; updatePdfPreview();
+    try {
+      const preview = await document.previewPageImage(number, { signal: controller.signal, rotation });
+      if (controller.signal.aborted || disposed || document !== ocr.document) return;
+      ocr.preview = preview; ocr.previewPage = number; ocr.rotation = rotation; ocr.previewRotation = rotation; ocr.previewBusy = false; ocr.previewMessage = ''; previewAbort = null; updatePdfPreview();
+    } catch (error) {
+      if (controller.signal.aborted || disposed || document !== ocr.document) return;
+      ocr.previewBusy = false; previewAbort = null; ocr.previewMessage = error?.message || 'No se pudo mostrar esta página. Puedes volver a intentarlo.'; updatePdfPreview(); tell(ocr.previewMessage);
+    }
   }
   async function selectFile(file) {
     if (!file) return;
     cancelOcr(); releaseDocument();
-    ocr = { ...ocr, file: null, document: null, result: null, preview: '', confirmed: false, busy: false, progress: 0, message: '' };
+    ocr = { ...ocr, file: null, document: null, result: null, preview: '', previewPage: 1, rotation: 0, previewRotation: 0, previewBusy: false, previewMessage: '', confirmed: false, busy: false, progress: 0, message: '' };
     if (file.size > OCR_LIMITS.maxFileBytes) { message = `El archivo supera el límite de ${Math.round(OCR_LIMITS.maxFileBytes / 1024 / 1024)} MB.`; renderImport(); return; }
     const image = /\.(?:png|jpe?g|webp)$/i.test(file.name) || ['image/png', 'image/jpeg', 'image/webp'].includes(file.type);
     const pdf = /\.pdf$/i.test(file.name) || file.type === 'application/pdf';
@@ -134,11 +187,11 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     ocr.busy = true; ocr.message = 'Abriendo el PDF…'; ocrAbort = new AbortController(); const controller = ocrAbort; renderImport();
     try {
       const document = await inspectPdf(file, { signal: controller.signal, onProgress: value => { if (!controller.signal.aborted && !disposed) updateOcrProgress(value); } });
-      if (controller.signal.aborted || disposed) { document.dispose?.(); return; }
-      ocr.document = document; ocr.preview = document.preview || ''; ocr.pages = '1'; ocr.busy = false; ocr.message = `${document.pageCount} páginas. Elige cuáles quieres usar.`; ocrAbort = null; renderImport(); tell(ocr.message);
+      if (controller.signal.aborted || disposed) { disposeDocument(document); return; }
+      ocr.document = document; ocr.preview = document.preview || ''; ocr.pages = '1'; ocr.busy = false; ocr.message = `PDF listo: ${document.pageCount} ${document.pageCount === 1 ? 'página' : 'páginas'}. Selecciona las páginas y pulsa «Extraer texto».`; ocrAbort = null; renderImport(); tell(ocr.message);
     } catch (error) {
       if (controller.signal.aborted || disposed) return;
-      ocr.busy = false; ocrAbort = null; message = typeof error?.message === 'string' ? error.message : 'No se pudo abrir el PDF. Prueba otro documento.'; renderImport(); tell(message);
+      ocr.busy = false; ocrAbort = null; ocr.message = ''; message = typeof error?.message === 'string' ? error.message : 'No se pudo abrir el PDF. Prueba otro documento.'; renderImport(); tell(message);
     }
   }
   function selectedPages() {
@@ -160,35 +213,58 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     if (values.size > OCR_LIMITS.maxSelectedPages) throw new RangeError(`Selecciona hasta ${OCR_LIMITS.maxSelectedPages} páginas por extracción.`);
     return [...values].sort((a, b) => a - b);
   }
+  function updatePageSelection() {
+    const input = container.querySelector('#dictationPdfPages');
+    const hint = container.querySelector('#dictationPdfPageSelection');
+    if (!input || !hint || !ocr.document) return;
+    try {
+      const pages = selectedPages();
+      input.removeAttribute('aria-invalid'); hint.classList.remove('error');
+      hint.textContent = `${pages.length === 1 ? 'Se extraerá la página' : `Se extraerán ${pages.length} páginas:`} ${pages.join(', ')}. Máximo ${OCR_LIMITS.maxSelectedPages} por extracción.`;
+    } catch (error) {
+      input.setAttribute('aria-invalid', 'true'); hint.classList.add('error'); hint.textContent = error.message;
+    }
+  }
   async function runOcr() {
     if (ocr.busy || !ocr.file) return;
+    if (importMethod === 'pdf' && !ocr.document) { await selectFile(ocr.file); return; }
     let pages;
-    if (importMethod === 'pdf') { pages = guard(selectedPages); if (!pages) return; }
+    if (importMethod === 'pdf') {
+      try { pages = selectedPages(); }
+      catch (error) { updatePageSelection(); container.querySelector('#dictationPdfPages')?.focus(); tell(error.message); return; }
+    }
+    cancelPreview();
     message = ''; ocr.busy = true; ocr.confirmed = false; ocr.progress = 0; ocr.message = 'Preparando la extracción local…';
     ocrAbort = new AbortController(); const controller = ocrAbort; renderImport();
-    const options = { script: ocr.script, signal: controller.signal, onProgress: value => { if (!controller.signal.aborted && !disposed) updateOcrProgress(value); } };
+    const options = { script: ocr.script, rotation: ocr.rotation, signal: controller.signal, onProgress: value => { if (!controller.signal.aborted && !disposed) updateOcrProgress(value); } };
     try {
       const result = importMethod === 'pdf' ? await extractPdf(ocr.document, { ...options, pages }) : await extractImage(ocr.file, options);
       if (controller.signal.aborted || disposed) return;
-      ocr.result = result; ocr.busy = false; ocr.progress = 1; ocr.message = 'Texto extraído. Revisa los caracteres antes de continuar.'; ocr.preview = result.preview || ocr.preview; ocrAbort = null;
+      ocr.result = result; ocr.busy = false; ocr.progress = 1; ocr.message = 'Texto extraído. Revisa los caracteres antes de continuar.'; ocr.preview = result.preview || ocr.preview; ocr.previewPage = result.previewPage || pages?.[0] || 1; ocr.previewRotation = ocr.rotation; ocr.previewMessage = ''; ocrAbort = null;
       draft.text = result.text || ''; draft.sentences = [];
       renderImport(); container.querySelector('#dictationText')?.focus(); tell('Extracción terminada. Revisa y confirma el texto.');
     } catch (error) {
       if (controller.signal.aborted || disposed) return;
-      ocr.busy = false; ocrAbort = null; message = typeof error?.message === 'string' ? error.message : 'No se pudo extraer el texto. Prueba una imagen más nítida o un PDF diferente.'; renderImport(); tell(message);
+      ocr.busy = false; ocrAbort = null; ocr.message = ''; message = typeof error?.message === 'string' ? error.message : 'No se pudo extraer el texto. Prueba una imagen más nítida o un PDF diferente.'; renderImport(); tell(message);
     }
   }
   function renderOcrImport(root) {
     const section = el('section', 'dictation-ocr-import'); section.id = 'dictationOcrImport';
+    const setup = ocr.result ? el('details', 'dictation-ocr-setup') : section;
+    if (setup !== section) { setup.open = ocr.busy; setup.append(el('summary', '', `Archivo de origen: ${ocr.file?.name || 'documento'}`)); }
     const label = el('label', 'dictation-label', importMethod === 'pdf' ? 'Documento PDF' : 'Imagen con texto chino'); label.htmlFor = 'dictationFile';
     const file = el('input', 'dictation-file'); file.id = 'dictationFile'; file.type = 'file'; file.accept = importMethod === 'pdf' ? 'application/pdf,.pdf' : 'image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp';
-    file.addEventListener('change', () => selectFile(file.files?.[0])); section.append(label, file);
+    // Renders must not tell the user that a previously chosen document was lost.
+    if (ocr.file && typeof DataTransfer === 'function') {
+      try { const transfer = new DataTransfer(); transfer.items.add(ocr.file); file.files = transfer.files; } catch { /* The selected name is also shown below in browsers that disallow this. */ }
+    }
+    file.addEventListener('change', () => selectFile(file.files?.[0])); setup.append(label, file);
     if (importMethod === 'image') {
       const camera = el('input', 'sr-only'); camera.id = 'dictationCamera'; camera.type = 'file'; camera.accept = 'image/png,image/jpeg,image/webp'; camera.setAttribute('capture', 'environment'); camera.tabIndex = -1;
-      camera.addEventListener('change', () => selectFile(camera.files?.[0])); section.append(camera, action('Usar la cámara', () => camera.click(), 'text-button dictation-camera', 'dictationOpenCamera'));
+      camera.addEventListener('change', () => selectFile(camera.files?.[0])); setup.append(camera, action('Usar la cámara', () => camera.click(), 'text-button dictation-camera', 'dictationOpenCamera'));
     }
-    if (ocr.file) section.append(el('p', 'dictation-file-name', `${ocr.file.name} · ${(ocr.file.size / 1024 / 1024).toFixed(1).replace('.', ',')} MB`));
-    section.append(el('p', 'dictation-hint', `Los documentos se procesan en este navegador y no se suben. Límite: ${Math.round(OCR_LIMITS.maxFileBytes / 1024 / 1024)} MB${importMethod === 'pdf' ? `, ${OCR_LIMITS.maxPdfPages} páginas por PDF y ${OCR_LIMITS.maxSelectedPages} por extracción` : ''}. La primera extracción puede tardar mientras se prepara el motor de reconocimiento.`));
+    if (ocr.file) setup.append(el('p', 'dictation-file-name', `${ocr.file.name} · ${formatFileSize(ocr.file.size)}`));
+    setup.append(el('p', 'dictation-hint', `Los documentos se procesan en este navegador y no se suben. Límite: ${Math.round(OCR_LIMITS.maxFileBytes / 1024 / 1024)} MB${importMethod === 'pdf' ? `, ${OCR_LIMITS.maxPdfPages} páginas por PDF y ${OCR_LIMITS.maxSelectedPages} por extracción` : ''}. La primera extracción puede tardar mientras se prepara el motor de reconocimiento.`));
     const options = el('div', 'dictation-ocr-options');
     const scriptField = el('div'); const scriptLabel = el('label', 'dictation-label', 'Texto del documento'); scriptLabel.htmlFor = 'dictationOcrScript';
     const script = el('select', 'dictation-input'); script.id = 'dictationOcrScript';
@@ -196,19 +272,39 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     script.value = ocr.script; script.addEventListener('change', () => { ocr.script = script.value; }); scriptField.append(scriptLabel, script); options.append(scriptField);
     if (importMethod === 'pdf' && ocr.document) {
       const pagesField = el('div'); const pagesLabel = el('label', 'dictation-label', `Páginas de 1 a ${ocr.document.pageCount}`); pagesLabel.htmlFor = 'dictationPdfPages';
-      const pages = el('input', 'dictation-input'); pages.id = 'dictationPdfPages'; pages.type = 'text'; pages.value = ocr.pages; pages.placeholder = 'Por ejemplo: 1-3, 5'; pages.setAttribute('inputmode', 'text'); pages.addEventListener('input', () => { ocr.pages = pages.value; });
-      pagesField.append(pagesLabel, pages, el('p', 'dictation-hint', 'Se extraen en el orden del documento.')); options.append(pagesField);
+      const pages = el('input', 'dictation-input'); pages.id = 'dictationPdfPages'; pages.type = 'text'; pages.value = ocr.pages; pages.placeholder = 'Por ejemplo: 1-3, 5'; pages.setAttribute('inputmode', 'text'); pages.setAttribute('aria-describedby', 'dictationPdfPageSelection'); pages.addEventListener('input', () => { ocr.pages = pages.value; updatePageSelection(); });
+      const selection = el('p', 'dictation-hint'); selection.id = 'dictationPdfPageSelection';
+      const shortcuts = el('div', 'dictation-pdf-shortcuts');
+      const count = Math.min(ocr.document.pageCount, OCR_LIMITS.maxSelectedPages);
+      const allPages = action(ocr.document.pageCount <= OCR_LIMITS.maxSelectedPages ? 'Usar todas las páginas' : `Usar las primeras ${count}`, () => { ocr.pages = count === 1 ? '1' : `1-${count}`; pages.value = ocr.pages; updatePageSelection(); }, 'text-button'); allPages.dataset.pdfPagesChoice = 'all';
+      shortcuts.append(allPages); pagesField.append(pagesLabel, pages, selection, shortcuts); options.append(pagesField);
     }
-    section.append(options);
+    setup.append(options);
     const controls = el('div', 'dictation-ocr-actions');
     const extract = action(ocr.result ? 'Extraer de nuevo' : 'Extraer texto', runOcr, 'primary-button', 'dictationOcrExtract'); controls.append(extract);
-    const cancel = action('Cancelar extracción', cancelOcr, 'secondary-button', 'dictationOcrCancel'); controls.append(cancel); section.append(controls);
-    const progress = el('progress', 'dictation-ocr-progress'); progress.id = 'dictationOcrProgress'; progress.max = 1; progress.value = ocr.progress; progress.setAttribute('aria-label', 'Progreso de extracción'); section.append(progress);
-    const status = el('p', 'dictation-hint'); status.id = 'dictationOcrProgressLabel'; status.setAttribute('role', 'status'); status.textContent = ocr.message; section.append(status);
+    const cancel = action('Cancelar', cancelOcr, 'secondary-button', 'dictationOcrCancel'); controls.append(cancel); setup.append(controls);
+    const progress = el('progress', 'dictation-ocr-progress'); progress.id = 'dictationOcrProgress'; progress.max = 1; progress.value = ocr.progress; progress.setAttribute('aria-label', 'Progreso de extracción'); setup.append(progress);
+    const status = el('p', 'dictation-hint'); status.id = 'dictationOcrProgressLabel'; status.setAttribute('role', 'status'); status.textContent = ocr.message; setup.append(status);
+    if (setup !== section) section.append(setup);
     if (ocr.preview) {
       const preview = el('details', 'dictation-source-preview'); preview.open = !ocr.result;
-      preview.append(el('summary', '', importMethod === 'pdf' ? 'Ver página de referencia' : 'Ver imagen de referencia'));
-      const image = el('img', 'dictation-ocr-preview'); image.src = ocr.preview; image.alt = importMethod === 'pdf' ? 'Vista previa de una página del PDF seleccionado' : 'Imagen seleccionada para extraer el texto'; image.loading = 'lazy'; preview.append(image); section.append(preview);
+      preview.append(el('summary', '', importMethod === 'pdf' ? 'Consultar el PDF original' : 'Ver imagen de referencia'));
+      if (importMethod === 'pdf' && ocr.document) {
+        const toolbar = el('div', 'dictation-pdf-pagination');
+        const previous = action('←', () => showPdfPage(ocr.previewPage - 1), 'secondary-button', 'dictationPdfPreviewPrevious'); previous.setAttribute('aria-label', 'Ver página anterior del PDF');
+        const pageLabel = el('label', 'dictation-pdf-page-label', 'Página'); pageLabel.htmlFor = 'dictationPdfPreviewPage';
+        const pageSelect = el('select', 'dictation-input'); pageSelect.id = 'dictationPdfPreviewPage';
+        for (let number = 1; number <= ocr.document.pageCount; number++) { const option = el('option', '', `${number} de ${ocr.document.pageCount}`); option.value = String(number); pageSelect.append(option); }
+        pageSelect.value = String(ocr.previewPage); pageSelect.addEventListener('change', () => showPdfPage(Number(pageSelect.value)));
+        const next = action('→', () => showPdfPage(ocr.previewPage + 1), 'secondary-button', 'dictationPdfPreviewNext'); next.setAttribute('aria-label', 'Ver página siguiente del PDF');
+        toolbar.append(previous, pageLabel, pageSelect, next); preview.append(toolbar);
+        const usePage = action('Extraer solo esta página', () => { ocr.pages = String(ocr.previewPage); const pages = container.querySelector('#dictationPdfPages'); if (pages) pages.value = ocr.pages; updatePageSelection(); runOcr(); }, 'text-button', 'dictationPdfUsePreview');
+        const rotate = action('Girar 90°', () => showPdfPage(ocr.previewPage, { rotation: (ocr.rotation + 90) % 360 }), 'text-button', 'dictationPdfRotate'); rotate.setAttribute('aria-label', 'Girar todas las páginas del PDF 90 grados hacia la derecha');
+        const previewActions = el('div', 'dictation-pdf-preview-actions'); previewActions.append(usePage, rotate); preview.append(previewActions);
+        const rotationStatus = el('p', 'dictation-hint'); rotationStatus.id = 'dictationPdfRotationStatus'; preview.append(rotationStatus);
+        const status = el('p', 'dictation-hint'); status.id = 'dictationPdfPreviewStatus'; status.setAttribute('role', 'status'); preview.append(status);
+      }
+      const image = el('img', 'dictation-ocr-preview'); image.id = 'dictationSourceImage'; image.src = ocr.preview; image.alt = importMethod === 'pdf' ? `Página ${ocr.previewPage} del PDF seleccionado` : 'Imagen seleccionada para extraer el texto'; image.loading = 'lazy'; preview.append(image); section.append(preview);
     }
     if (ocr.result) {
       const result = ocr.result;
@@ -217,7 +313,9 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
         const methods = result.pages.map(page => `Pág. ${page.number}: ${{ digital: 'texto seleccionable', ocr: 'reconocimiento de imagen', mixed: 'texto e imagen' }[page.method] || 'texto extraído'}`).join(' · ');
         section.append(el('p', 'dictation-hint', methods));
       }
-      const warnings = [...(result.warnings || []), ...(result.pages || []).flatMap(page => page.warnings || [])];
+      // The review note above already explains this general OCR limitation.
+      const genericWarning = 'El OCR puede confundir caracteres y puntuación. Revisa y confirma el texto antes de generar el dictado.';
+      const warnings = [...(result.warnings || []), ...(result.pages || []).flatMap(page => page.warnings || [])].filter(warning => warning !== genericWarning);
       if (warnings.length) { const list = el('ul', 'dictation-ocr-warnings'); for (const warning of [...new Set(warnings)]) list.append(el('li', '', String(warning))); section.append(list); }
       const fragments = (result.pages || []).flatMap(page => page.lowConfidence || []);
       if (fragments.length) {
@@ -227,7 +325,7 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
         confidence.append(list, el('p', 'dictation-hint', 'La confianza del motor no garantiza que un carácter sea correcto. Revisa también el resto del texto.')); section.append(confidence);
       }
     }
-    root.append(section); updateOcrProgress();
+    root.append(section); updateOcrProgress(); updatePageSelection();
   }
   function renderHome() {
     const root = buildShell('听写 · Dictado', 'Escucha una frase, escríbela y descubre exactamente qué caracteres necesitas practicar.');
@@ -277,7 +375,7 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     const methods = el('div', 'dictation-import-methods'); methods.setAttribute('role', 'group'); methods.setAttribute('aria-label', 'Cómo introducir el texto');
     for (const [value, label] of [['text', 'Pegar texto'], ['image', 'Subir imagen'], ['pdf', 'Subir PDF']]) {
       const choice = action(label, () => {
-        if (importMethod !== value) { cancelOcr(); releaseDocument(); ocr = { ...ocr, file: null, document: null, result: null, preview: '', confirmed: false, progress: 0, message: '' }; }
+        if (importMethod !== value) { cancelOcr(); releaseDocument(); ocr = { ...ocr, file: null, document: null, result: null, preview: '', previewPage: 1, rotation: 0, previewRotation: 0, previewBusy: false, previewMessage: '', confirmed: false, progress: 0, message: '' }; }
         importMethod = value; message = ''; renderImport();
       }, 'dictation-method'); choice.dataset.importMethod = value; choice.setAttribute('aria-pressed', String(importMethod === value)); methods.append(choice);
     }
@@ -295,7 +393,7 @@ export function mountDictation(container, { onExit = () => {}, announce = () => 
     const counter = el('p', 'dictation-count'); counter.id = 'dictationInputCount';
     const updateCount = () => { draft.text = input.value; counter.textContent = `${points(input.value).toLocaleString('es')} caracteres de texto · ${countChinese(input.value).toLocaleString('es')} chinos`; };
     input.addEventListener('input', () => { updateCount(); if (importMethod !== 'text') { ocr.confirmed = false; const confirmation = container.querySelector('#dictationConfirmOcr'); if (confirmation) confirmation.checked = false; } }); updateCount();
-    const submit = action(importMethod === 'text' ? 'Revisar frases' : '开始听写 · Comenzar dictado', () => form.requestSubmit(), 'primary-button', 'dictationParse');
+    const submit = action('Revisar frases', () => form.requestSubmit(), 'primary-button', 'dictationParse');
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (ocr.busy) { message = 'Espera a que termine la extracción o cancélala antes de continuar.'; renderImport(); tell(message); return; }

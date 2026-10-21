@@ -71,7 +71,7 @@ test('el Blueprint solo contiene un servicio Free y no migra con secretos de pro
   const localBlueprint=new URL('../render.yaml',import.meta.url);
   const blueprint=readFileSync(existsSync(localBlueprint)?localBlueprint:new URL('../../render.yaml',import.meta.url),'utf8');
   assert.match(blueprint,/plan: free/);assert.match(blueprint,/rootDir: HanYuMatiz_App/);
-  assert.match(blueprint,/branch: hanyumatiz-publicacion-gratis/);
+  assert.match(blueprint,/branch: hanyumatiz-pdf-corregido/);
   assert.match(blueprint,/healthCheckPath: \/healthz/);
   assert.match(blueprint,/startCommand: npm start/);
   assert.match(blueprint,/HANYUMATIZ_DATABASE_URL\s+sync: false/);

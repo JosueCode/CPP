@@ -43,7 +43,7 @@ El rol de aplicación puede leer el catálogo, insertar y actualizar reportes e 
 
 ## 3. Crear el servicio gratuito de Render
 
-En Render, conecta `JosueCode/CPP` y crea un Blueprint. Selecciona en el panel la rama `hanyumatiz-publicacion-gratis`, que contiene `render.yaml` en la raíz. El servicio del Blueprint también declara esa rama explícitamente. Revisa la pantalla antes de confirmar: debe mostrar un único servicio web **Free** y ninguna base de datos o recurso de pago.
+En Render, conecta `JosueCode/CPP` y crea un Blueprint. Selecciona en el panel la rama `hanyumatiz-pdf-corregido`, que contiene `render.yaml` en la raíz. El servicio del Blueprint también declara esa rama explícitamente. Revisa la pantalla antes de confirmar: debe mostrar un único servicio web **Free** y ninguna base de datos o recurso de pago.
 
 El Blueprint solicita `HANYUMATIZ_DATABASE_URL`. Introduce únicamente la conexión de `hanyumatiz_app`. Genera una contraseña privada larga para la administración y utiliza el usuario `hanyumatiz`. La contraseña del panel es distinta de la contraseña SQL. Guárdala en un gestor de contraseñas y consulta la variable privada generada en el panel de Render cuando necesites acceder a `/admin`.
 

@@ -46,7 +46,9 @@ async function getAsset(name,signal) {
   let bytes;
   if(element) bytes=decodeBase64(element.textContent);
   else {
-    const response=await fetch(new URL(`./vendor/ocr/${name}`,import.meta.url),{signal,credentials:'same-origin'});
+    let response;
+    try {response=await fetch(new URL(`./vendor/ocr/${name}`,import.meta.url),{signal,credentials:'same-origin'});}
+    catch(error) {checkAbort(signal);throw fail('No se pudo cargar el motor de extracción. Abre el HTML completo descargado o comprueba la carpeta vendor/ocr de tu instalación.','ASSET_UNAVAILABLE');}
     if(!response.ok) throw fail('No se pudo cargar el motor de extracción. Comprueba que el hosting incluya la carpeta vendor/ocr.','ASSET_UNAVAILABLE');
     bytes=new Uint8Array(await response.arrayBuffer());
   }
@@ -177,7 +179,11 @@ async function loadPdf(options) {
     const module=await import(moduleUrl);
     module.GlobalWorkerOptions.workerSrc=await getAssetUrl('pdf.worker.min.mjs','application/javascript');
     return module;
-  })().catch(error=>{pdfModulePromise=undefined;throw error;});
+  })().catch(error=>{
+    pdfModulePromise=undefined;
+    if(typeof error.code==='string')throw error;
+    throw fail('No se pudo iniciar el lector de PDF. Prueba con un navegador actualizado y el HTML completo, o vuelve a cargar la página.','PDF_ENGINE_FAILED');
+  });
   const module=await pdfModulePromise;
   checkAbort(options.signal);
   return module;
@@ -190,10 +196,15 @@ class LocalPdfBinaryDataFactory {
     return (await getAsset(`${directory}/${filename}`)).slice();
   }
 }
-async function renderPage(page,{maxPixels=OCR_LIMITS.maxImagePixels,maxWidth=2500,signal}={}) {
-  const base=page.getViewport({scale:1});
-  const scale=Math.min(maxWidth/base.width,Math.sqrt(maxPixels/(base.width*base.height)),3);
-  const viewport=page.getViewport({scale});
+function checkedPdfRotation(rotation=0) {
+  if(![0,90,180,270].includes(rotation))throw fail('El giro debe ser de 0, 90, 180 o 270 grados.','INVALID_ROTATION');
+  return rotation;
+}
+async function renderPage(page,{maxPixels=OCR_LIMITS.maxImagePixels,maxWidth=2500,maxScale=3,rotation=0,signal}={}) {
+  rotation=((page.rotate||0)+checkedPdfRotation(rotation))%360;
+  const base=page.getViewport({scale:1,rotation});
+  const scale=Math.min(maxWidth/base.width,Math.sqrt(maxPixels/(base.width*base.height)),maxScale);
+  const viewport=page.getViewport({scale,rotation});
   const canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
   const context=canvas.getContext('2d',{alpha:false});
   const rendering=page.render({canvasContext:context,viewport,background:'#ffffff'});
@@ -204,28 +215,43 @@ async function renderPage(page,{maxPixels=OCR_LIMITS.maxImagePixels,maxWidth=250
 }
 export async function inspectPdf(file,options={}) {
   validateFile(file,'pdf');checkAbort(options.signal);progress(options,'Abriendo el PDF…',0);
+  const rotation=checkedPdfRotation(options.rotation);
+  // The upstream legacy build supplies newer APIs such as Promise.try, but
+  // still requires these ES2024 browser capabilities. Report an actionable
+  // message instead of exposing an internal TypeError to the learner.
+  if(typeof Promise.withResolvers!=='function'||typeof URL.parse!=='function')throw fail('Actualiza tu navegador para abrir documentos PDF. Usa una versión reciente de Chrome, Edge, Firefox o Safari; también puedes pegar el texto manualmente.','PDF_BROWSER_UNSUPPORTED');
   const module=await loadPdf(options);
-  const bytes=new Uint8Array(await file.arrayBuffer());checkAbort(options.signal);
-  const task=module.getDocument({data:bytes,BinaryDataFactory:LocalPdfBinaryDataFactory,cMapPacked:true,useWorkerFetch:false,isEvalSupported:false,enableXfa:false,verbosity:0,stopAtErrors:true});
-  const onAbort=()=>task.destroy();options.signal?.addEventListener('abort',onAbort,{once:true});
+  let bytes;
+  try {bytes=new Uint8Array(await file.arrayBuffer());}catch {checkAbort(options.signal);throw fail('No se pudo leer el archivo. Vuelve a seleccionarlo desde una carpeta de tu dispositivo.','FILE_READ_FAILED');}
+  checkAbort(options.signal);
+  let task;
+  try {task=module.getDocument({data:bytes,BinaryDataFactory:LocalPdfBinaryDataFactory,cMapPacked:true,useWorkerFetch:false,isEvalSupported:false,enableXfa:false,verbosity:0,stopAtErrors:true});}
+  catch {throw fail('No se pudo iniciar el lector de PDF. Actualiza el navegador y vuelve a seleccionar el archivo.','PDF_ENGINE_FAILED');}
+  const onAbort=()=>{task.destroy().catch(()=>{});};options.signal?.addEventListener('abort',onAbort,{once:true});
   let pdf;
   try {
     pdf=await task.promise;checkAbort(options.signal);
     if(pdf.numPages>OCR_LIMITS.maxPdfPages)throw fail('Este PDF supera 100 páginas. Divide el documento y carga una parte más pequeña.','PDF_TOO_MANY_PAGES');
     const id=`pdf-${Date.now()}-${++nextJob}`;
     let disposed=false;
-    const handle={id,pageCount:pdf.numPages,pages:Array.from({length:pdf.numPages},(_,index)=>({number:index+1})),preview:'',previewPage:1,
+    const handle={id,pageCount:pdf.numPages,pages:Array.from({length:pdf.numPages},(_,index)=>({number:index+1})),preview:'',previewPage:1,rotation,warnings:[],
       async previewPageImage(number,previewOptions={}) {
         if(disposed)throw fail('Vuelve a seleccionar el PDF.','PDF_DISPOSED');
         if(!Number.isInteger(number)||number<1||number>pdf.numPages)throw fail('Esta página no existe.','INVALID_PAGE');
         const page=await pdf.getPage(number);
-        const {canvas}=await renderPage(page,{maxPixels:900_000,maxWidth:900,signal:previewOptions.signal});
-        try {return canvas.toDataURL('image/png');}finally{canvas.width=0;canvas.height=0;page.cleanup();}
+        let canvas;
+        try {({canvas}=await renderPage(page,{maxPixels:900_000,maxWidth:900,rotation:previewOptions.rotation??rotation,signal:previewOptions.signal}));return canvas.toDataURL('image/png');}
+        finally{if(canvas){canvas.width=0;canvas.height=0;}page.cleanup();}
       },
       async dispose(){if(disposed)return;disposed=true;documents.delete(id);await task.destroy();},
     };
     documents.set(id,{pdf,task,handle});
-    try {handle.preview=await handle.previewPageImage(1,options);} catch(error) {await handle.dispose();throw error;}
+    try {handle.preview=await handle.previewPageImage(1,options);} catch(error) {
+      if(options.signal?.aborted){await handle.dispose();throw error;}
+      // A damaged image/font in the first preview must not discard a readable
+      // text layer, or prevent selecting another, healthy page of the document.
+      handle.warnings.push('No se pudo mostrar la primera página. Puedes seleccionar otras páginas e intentar extraer su texto.');
+    }
     progress(options,`PDF listo: ${pdf.numPages} páginas. Selecciona las que quieras usar.`,1);
     return handle;
   } catch(error) {
@@ -236,13 +262,23 @@ export async function inspectPdf(file,options={}) {
     throw fail('No se pudo abrir el PDF. Puede estar dañado o no ser un documento PDF válido.','CORRUPT_PDF');
   } finally {options.signal?.removeEventListener('abort',onAbort);}
 }
-function digitalLines(content,viewport) {
+export function digitalPdfLines(content,viewport) {
   const lines=[];
+  // /Rotate changes how a page is displayed, not the logical order of its text.
+  // Keep reading coordinates independent from display rotation, but retain
+  // actual display coordinates for masking digital text in mixed PDF pages.
+  const readingViewport=viewport.clone({rotation:0});
   for(const item of content.items||[]) {
     if(typeof item.str!=='string'||!item.str.trim())continue;
-    const [x,y]=viewport.convertToViewportPoint(item.transform[4],item.transform[5]);
-    const height=Math.max(3,Math.hypot(item.transform[2],item.transform[3])*viewport.scale);
-    const box={x0:x,y0:y-height,x1:x+Math.abs(item.width*viewport.scale),y1:y+height*.25};
+    const [a,b,c,d,e,f]=item.transform;
+    const [x,y]=readingViewport.convertToViewportPoint(e,f);
+    const fontHeight=Math.hypot(c,d)||item.height||3;
+    const height=Math.max(3,fontHeight*readingViewport.scale);
+    const baseline=Math.hypot(a,b)||1;
+    const width=Math.abs(item.width||0);
+    const points=[];
+    for(const along of [0,width])for(const rise of [-.25,.85])points.push(viewport.convertToViewportPoint(e+a/baseline*along+c*rise,f+b/baseline*along+d*rise));
+    const box={x0:Math.min(...points.map(point=>point[0])),y0:Math.min(...points.map(point=>point[1])),x1:Math.max(...points.map(point=>point[0])),y1:Math.max(...points.map(point=>point[1]))};
     const row=lines.find(line=>Math.abs(line.y-y)<Math.max(3,height*.35));
     const span={text:item.str,x,bbox:box,hasEOL:item.hasEOL};
     if(row)row.spans.push(span);else lines.push({y,spans:[span],bbox:box});
@@ -257,36 +293,58 @@ function coveredByDigital(word,boxes) {
   const box=word.bbox;const area=Math.max(1,(box.x1-box.x0)*(box.y1-box.y0));
   return boxes.some(other=>Math.max(0,Math.min(box.x1,other.x1)-Math.max(box.x0,other.x0))*Math.max(0,Math.min(box.y1,other.y1)-Math.max(box.y0,other.y0))/area>0.3);
 }
-function hasSubstantialImage(operators,module,page) {
+export function pdfImageProfile(operators,ops,page) {
   let matrix=[1,0,0,1,0,0];const stack=[];
-  const imageOps=new Set([module.OPS.paintImageXObject,module.OPS.paintInlineImageXObject,module.OPS.paintImageMaskXObject]);
-  const specialImageOps=new Set([module.OPS.paintImageXObjectRepeat,module.OPS.paintInlineImageXObjectGroup,module.OPS.paintImageMaskXObjectGroup,module.OPS.paintImageMaskXObjectRepeat]);
+  const transform=args=>{
+    const [a,b,c,d,e,f]=matrix;const [g,h,i,j,k,l]=args;
+    matrix=[a*g+c*h,b*g+d*h,a*i+c*j,b*i+d*j,a*k+c*l+e,b*k+d*l+f];
+  };
+  const imageOps=new Set([ops.paintImageXObject,ops.paintInlineImageXObject,ops.paintImageMaskXObject]);
+  const specialImageOps=new Set([ops.paintImageXObjectRepeat,ops.paintInlineImageXObjectGroup,ops.paintImageMaskXObjectGroup,ops.paintImageMaskXObjectRepeat]);
   const view=page.view;const pageArea=Math.abs((view[2]-view[0])*(view[3]-view[1]));
+  let hasImages=false;let dominantArea=0;let maxScale=3;
   for(let index=0;index<operators.fnArray.length;index++) {
     const operator=operators.fnArray[index];const args=operators.argsArray[index];
-    if(operator===module.OPS.save)stack.push(matrix.slice());
-    else if(operator===module.OPS.restore)matrix=stack.pop()||[1,0,0,1,0,0];
-    else if(operator===module.OPS.transform) {
-      const [a,b,c,d,e,f]=matrix;const [g,h,i,j,k,l]=args;
-      matrix=[a*g+c*h,b*g+d*h,a*i+c*j,b*i+d*j,a*k+c*l+e,b*k+d*l+f];
-    } else if(specialImageOps.has(operator))return true;
+    if(operator===ops.save||operator===ops.paintFormXObjectBegin) {
+      stack.push(matrix.slice());
+      if(operator===ops.paintFormXObjectBegin&&args[0])transform(args[0]);
+    } else if(operator===ops.restore||operator===ops.paintFormXObjectEnd)matrix=stack.pop()||[1,0,0,1,0,0];
+    else if(operator===ops.transform)transform(args);
+    else if(specialImageOps.has(operator))hasImages=true;
     else if(imageOps.has(operator)) {
       const width=Math.hypot(matrix[0],matrix[1]);const height=Math.hypot(matrix[2],matrix[3]);
       const area=Math.abs(matrix[0]*matrix[3]-matrix[1]*matrix[2]);
-      if(width>=40&&height>=20&&area>=pageArea*.008)return true;
+      if(width>=40&&height>=20&&area>=pageArea*.008) {
+        hasImages=true;
+        const raster=operator===ops.paintImageXObject?{width:args[1],height:args[2]}:args[0];
+        if(area>=pageArea*.15&&area>dominantArea&&raster?.width>0&&raster?.height>0) {
+          // Enlarging a low-resolution scan does not add detail. It can make
+          // Chinese glyphs too large for the OCR line/character segmentation.
+          // Respect the native pixels of the dominant scan while the renderer
+          // still applies the global 4 MP memory cap to high-resolution pages.
+          dominantArea=area;
+          maxScale=Math.min(3,raster.width/width/(page.userUnit||1),raster.height/height/(page.userUnit||1));
+        }
+      }
     }
   }
-  return false;
+  return {hasImages,maxScale};
 }
 export async function extractPdf(documentOrFile,options={}) {
   let handle=documentOrFile;let ownsDocument=false;
   if(typeof documentOrFile?.arrayBuffer==='function'){handle=await inspectPdf(documentOrFile,options);ownsDocument=true;}
   const entry=documents.get(handle?.id);
   if(!entry)throw fail('Selecciona otra vez el PDF para extraer su texto.','PDF_DISPOSED');
-  const selected=selectPdfPages(options.pages||[1],handle.pageCount);
   let worker;let preview=handle.preview;
   const results=[];
   try {
+    const selected=selectPdfPages(options.pages||[1],handle.pageCount);
+    const rotation=checkedPdfRotation(options.rotation??handle.rotation);
+    const warnings=[...(handle.warnings||[])];
+    if(selected[0]!==handle.previewPage||rotation!==handle.rotation||!preview) {
+      try {preview=await handle.previewPageImage(selected[0],{...options,rotation});}
+      catch(error) {if(options.signal?.aborted)throw error;preview='';warnings.push(`No se pudo mostrar la página ${selected[0]}. Revisa el texto extraído comparándolo con el documento original.`);}
+    }
     const module=await loadPdf(options);
     for(let index=0;index<selected.length;index++) {
       checkAbort(options.signal);const number=selected[index];
@@ -296,21 +354,21 @@ export async function extractPdf(documentOrFile,options={}) {
       try {
         const content=await page.getTextContent();checkAbort(options.signal);
         const operators=await page.getOperatorList();checkAbort(options.signal);
-        const hasImages=hasSubstantialImage(operators,module,page);
+        const {hasImages,maxScale}=pdfImageProfile(operators,module.OPS,page);
         const digitalText=normalizeExtractedText(content.items.filter(item=>typeof item.str==='string').map(item=>item.str+(item.hasEOL?'\n':' ')).join(''));
         const hasChinese=chinese.test(digitalText);
         if(hasChinese&&!hasImages) {
-          const lines=digitalLines(content,page.getViewport({scale:1}));
+          const lines=digitalPdfLines(content,page.getViewport({scale:1}));
           results.push({number,method:'digital',text:normalizeExtractedText(lines.map(line=>line.text).join('\n')),confidence:null,lowConfidence:[],warnings:['El texto digital también puede tener encabezados o un orden de lectura distinto. Revísalo antes de confirmar.']});
         } else {
-          const rendered=await renderPage(page,{signal:options.signal});canvas=rendered.canvas;
+          const rendered=await renderPage(page,{maxScale,rotation,signal:options.signal});canvas=rendered.canvas;
           if(index===0)preview=canvas.toDataURL('image/png');
           if(!worker)worker=await createOcrWorker(options,number,selected.length,index);
           const data=await worker.recognize(canvas,number,selected.length,index);checkAbort(options.signal);
           const lines=ocrLines(data);let lowConfidence=confidenceFragments(lines);const warnings=[];
           let text=normalizeExtractedText(data.text);let method='ocr';
           if(hasChinese) {
-            method='mixed';const digital=digitalLines(content,rendered.viewport);
+            method='mixed';const digital=digitalPdfLines(content,rendered.viewport);
             const boxes=digital.flatMap(line=>line.digitalBoxes);
             const additional=lines.map(line=>{const words=line.words.filter(word=>!coveredByDigital(word,boxes));return {...line,words,text:normalizeExtractedText(words.map(word=>word.text).join(' '))};}).filter(line=>line.text&&chinese.test(line.text));
             lowConfidence=confidenceFragments(additional);
@@ -323,7 +381,7 @@ export async function extractPdf(documentOrFile,options={}) {
         progress(options,`Página ${number} extraída.`,(index+1)/selected.length,number,selected.length);
       } finally {if(canvas){canvas.width=0;canvas.height=0;}page.cleanup();}
     }
-    const result=extractionResult(results,preview);progress(options,'Extracción terminada. Revisa y confirma el texto.',1,selected.at(-1),selected.length);return result;
+    const result={...extractionResult(results,preview,warnings),previewPage:selected[0],rotation};progress(options,'Extracción terminada. Revisa y confirma el texto.',1,selected.at(-1),selected.length);return result;
   } catch(error) {if(options.signal?.aborted)throw aborted();if(typeof error.code==='string')throw error;throw fail('No se pudo extraer una de las páginas. Prueba con otra selección o una copia más nítida.','PDF_EXTRACTION_FAILED');}
   finally{worker?.terminate();if(ownsDocument)await handle.dispose();}
 }

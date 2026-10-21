@@ -1397,18 +1397,20 @@
     {
       "name": "pdf.min.mjs",
       "mime": "application/javascript",
-      "bytes": 458904,
-      "sha256": "57456c8e0c81e46be31174b499ef77f2b9f5ee46d04412ba627320a36755d4c2",
+      "bytes": 523774,
+      "sha256": "bccc24ea711db8e44503629519904a5292d73b9daaa214bbe7cdcc282b0f4259",
       "package": "pdfjs-dist",
-      "version": "6.4.299"
+      "version": "6.4.299",
+      "source": "legacy/build/pdf.min.mjs"
     },
     {
       "name": "pdf.worker.min.mjs",
       "mime": "application/javascript",
-      "bytes": 1264342,
-      "sha256": "9536359f1b8367850d485731ca1d5e45c159a7b7a0912325e539937aa21ceb18",
+      "bytes": 1321307,
+      "sha256": "145d2dd3ab0c86151011dba95acfa2d5336e2accd59388ea43dbee0efddaaec6",
       "package": "pdfjs-dist",
-      "version": "6.4.299"
+      "version": "6.4.299",
+      "source": "legacy/build/pdf.worker.min.mjs"
     },
     {
       "name": "standard_fonts/FoxitDingbats.pfb",
@@ -1644,7 +1646,26 @@
       "name": "LICENSE-TRAINEDDATA-APACHE-2.txt",
       "bytes": 11358,
       "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "name": "LICENSE-CORE-JS.txt",
+      "mime": "text/plain",
+      "bytes": 1134,
+      "sha256": "b87653fff2d44426ab5cd4723cee3b1364dc8d35a0acdf098c54689543123bf8",
+      "package": "core-js",
+      "version": "3.50.0"
     }
   ],
-  "totalAssetBytes": 12095231
+  "totalAssetBytes": 12095231,
+  "pdfBuild": "legacy (upstream compatibility build; main and worker from the same verified package)",
+  "bundledComponents": [
+    {
+      "name": "core-js",
+      "version": "3.50.0",
+      "license": "MIT",
+      "usedBy": "pdfjs-dist legacy build",
+      "licenseSource": "https://registry.npmjs.org/core-js/-/core-js-3.50.0.tgz",
+      "sourceIntegrity": "sha512-BRWgOLKkFeCgRudR6zrs8p9XJZcE14grzKMMssoYrk6krtuEZ7MTKPIY5RzOnqsEKIR9kst7wNzphttraT+Yqw=="
+    }
+  ]
 }

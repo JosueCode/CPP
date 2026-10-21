@@ -6,7 +6,7 @@ services:
     runtime: node
     plan: free
     repo: https://github.com/JosueCode/CPP
-    branch: hanyumatiz-publicacion-gratis
+    branch: hanyumatiz-pdf-corregido
     rootDir: HanYuMatiz_App
     buildCommand: npm ci --cache .local/npm-cache --no-fund --no-audit
     startCommand: npm start

@@ -1,0 +1,3 @@
+# Preserve exact fixture and delivery bytes across platforms.
+HanYuMatiz_App/tests/fixtures/pdf/*.pdf binary
+Descargas/HanYuMatiz_PDF_Corregido/* -text
